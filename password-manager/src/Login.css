@@ -1,19 +1,19 @@
 :root {
-  --cream: #FFFEF2;
-  --mossGreen: #58641D;
-  --forestGreen: #003A3A;
-  --darkGreen: #00231D;
-  --pumpkin: #DC851F;
-}
+    --cream: #FFFEF2;
+    --mossGreen: #58641D;
+    --forestGreen: #003A3A;
+    --darkGreen: #00231D;
+    --pumpkin: #DC851F;
+  }
 
-.Homepage {
+.Login {
     display: flex;
     height: 100vh;
   }
   
-  .homepage-left {
+  .login-left {
     flex: 1; /* Occupy half of the container's width */
-    background-color:  var(--mossGreen); /* Left side color */
+    background-color: var(--mossGreen); /* Left side color */
     color: var(--darkGreen);
     font-weight: bold;
     display: flex;
@@ -21,7 +21,7 @@
     justify-content: center;
   }
   
-  .homepage-right {
+  .login-right {
     flex: 1;
     background-color: var(--forestGreen); /* Right side color */
     display: flex;
@@ -29,37 +29,25 @@
     justify-content: center;
   }
   
-  .homepage-content {
+  .login-content {
     max-width: 400px; /* Adjust the maximum width of the content */
     text-align: left;
     padding: 20px
   }
 
-  .homepage-title {
+  .login-title {
     font-size: 50px;
     font-weight: 800;
     color: var(--cream);
   }
-  
-  .homepage-buttons {
-    display: flex;
-    flex-direction: column;
-  }
 
-  .button-title {
-    font-weight: 600;
-    font-size: 15px;
-    margin-bottom: 10px;
-    color: var(--cream);
-    text-align: center;
-  }
-  
-  .homepage-button {
+  .login-button {
     margin-top: 10px;
+    margin-left: 70px;
     padding: 15px;
+    width: 115px;
     font-size: 16px;
     text-align: center;
-    text-decoration: none;
     font-weight: bold;
     color: black;
     background-color: var(--pumpkin); /* Button color */
@@ -67,4 +55,25 @@
     border-radius: 15px;
     cursor: pointer;
   }
-  
+
+  .login-form {
+    max-width: 400px;
+    text-align: left;
+    padding: 20px;
+  }
+
+  .login-form input {
+    width: 250px;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    outline: none;
+    border: 2px solid var(--forestGreen); 
+  }
+
+  .login-form-title {
+    font-weight: 800;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }

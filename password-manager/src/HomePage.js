@@ -14,9 +14,11 @@ const Homepage = () => {
       </div>
       <div className="homepage-right">
         <div className="homepage-buttons">
+          <h2 className='button-title'>New around here?</h2>
           <Link to="/register" className="homepage-button">
             CREATE AN ACCOUNT
           </Link>
+          <h2 className="button-title"> OR </h2>
           <Link to="/login" className="homepage-button">
             SIGN IN
           </Link>
