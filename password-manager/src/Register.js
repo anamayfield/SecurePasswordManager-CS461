@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './Register.css';
+import './global-styles.css';
+import './LoginRegister.css';
 
 const Register = () => {
   const [fullName, setFullName] = useState('');
@@ -12,17 +13,17 @@ const Register = () => {
   };
 
   return (
-    <div className="Register">
-      <div className="register-left">
-        <div className="register-content">
-          <h1 className="register-title">Secure Password Manager</h1>
+    <div className="LoginRegister">
+      <div className="split-left">
+        <div className="login-register-content">
+          <h1 className="login-register-title">Secure Password Manager</h1>
           <p>Password Security Made Simple.</p>
           <p>Encrypted password management to protect your most sensitive credentials.</p>
         </div>
       </div>
-      <div className="register-right">
-        <div className="register-form">
-          <h2 className="register-form-title">Sign up to get started</h2>
+      <div className="split-right">
+        <div className="form">
+          <h2 className="login-register-form-title">Sign up to get started</h2>
           <form>
             <input
               type="text"
@@ -52,7 +53,7 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <br />
-            <button type="button" onClick={handleRegister} className="register-button">
+            <button type="button" onClick={handleRegister} className="button">
               REGISTER
             </button>
           </form>

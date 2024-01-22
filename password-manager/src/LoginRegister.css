@@ -1,0 +1,26 @@
+@import url('./global-styles.css');
+
+.LoginRegister {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .login-register-content {
+    max-width: 400px; 
+    text-align: left;
+    padding: 20px
+  }
+
+  .login-register-title {
+    font-size: 50px;
+    font-weight: 800;
+    color: var(--cream);
+    text-align: left;
+  }
+
+  .login-register-form-title {
+    font-weight: 800;
+    color: black;
+    margin-bottom: 20px;
+  }
+  

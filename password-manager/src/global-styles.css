@@ -1,0 +1,76 @@
+:root {
+    --cream: #FFFEF2;
+    --mossGreen: #58641D;
+    --forestGreen: #003A3A;
+    --darkGreen: #00231D;
+    --orange: #DC851F;
+    --yellow: #DC9A1F
+
+}
+
+.button {
+    margin-top: 10px;
+    padding: 15px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+    background-color: var(--orange);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+.button:hover {
+  background-color: var(--yellow);    
+}
+
+.form {
+  max-width: 400px;
+  text-align: left;
+  padding: 20px;
+}
+
+.form input {
+  width: 250px;
+  font-size: 16px;
+  padding: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: lightgrey;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  border: none;
+  color: black;
+}
+
+.content {
+  max-width: 400px;
+  text-align: left;
+  padding: 20px;
+}
+  
+.container {
+  background-color: var(--cream);
+  display: flex;
+  height: 100vh;
+}
+
+.split-left {
+    flex: 1;
+    background-color: var(--mossGreen);
+    color: var(--darkGreen);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+.split-right {
+  flex: 1;
+  background-color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

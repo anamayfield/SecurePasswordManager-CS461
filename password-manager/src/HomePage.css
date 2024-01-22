@@ -1,41 +1,18 @@
-:root {
-  --cream: #FFFEF2;
-  --mossGreen: #58641D;
-  --forestGreen: #003A3A;
-  --darkGreen: #00231D;
-  --pumpkin: #DC851F;
-}
+@import url('./global-styles.css');
 
 .Homepage {
     display: flex;
     height: 100vh;
   }
   
-  .homepage-left {
-    flex: 1; /* Occupy half of the container's width */
-    background-color:  var(--mossGreen); /* Left side color */
-    color: var(--darkGreen);
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .homepage-right {
-    flex: 1;
-    background-color: var(--forestGreen); /* Right side color */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
   .homepage-content {
-    max-width: 400px; /* Adjust the maximum width of the content */
+    max-width: 400px;
     text-align: left;
     padding: 20px
   }
 
   .homepage-title {
+    text-align: left;
     font-size: 50px;
     font-weight: 800;
     color: var(--cream);
@@ -50,21 +27,8 @@
     font-weight: 600;
     font-size: 15px;
     margin-bottom: 10px;
-    color: var(--cream);
-    text-align: center;
-  }
-  
-  .homepage-button {
-    margin-top: 10px;
-    padding: 15px;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
     color: black;
-    background-color: var(--pumpkin); /* Button color */
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
+    text-align: center;
   }
+
   
