@@ -20,6 +20,21 @@ function promptUser(question) {
   });
 }
 
+async function signIn() {
+    const { email, password } = await getUserCredentials();
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    });
+    if (error) {
+        console.error('Error signing in:', error.message);
+      } else {
+        console.log('Sign in successful. User data:', data);
+      }
+    rl.close();
+}
+
 async function signUp() {
     const { email, password } = await getUserCredentials();
   
@@ -74,4 +89,5 @@ function validateEmailAndPassword(email, password) {
     };
   }
 
-signUp();
+// signUp();
+signIn();
