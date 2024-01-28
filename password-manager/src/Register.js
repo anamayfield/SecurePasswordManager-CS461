@@ -5,7 +5,7 @@ import './global-styles.css';
 import './LoginRegister.css';
 
 const Register = () => {
-  const [fullName, setFullName] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
@@ -18,15 +18,16 @@ const Register = () => {
   const supabase = createClient(supabase_url, anon_key);
 
   const validateInput = () => {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     const passwordMinLength = 8;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
     const isEmailValid = emailPattern.test(email);
-    const isPasswordValid = password.length >= passwordMinLength;
+    const isPasswordValid = passwordPattern.test(password) && password.length >= passwordMinLength;
 
     const errors = {
       email: isEmailValid ? null : 'Invalid email format',
-      password: isPasswordValid ? null : 'Password must be at least 8 characters',
+      password: isPasswordValid ? null : 'Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, one number, and one special character',
     };
 
     setValidationErrors(errors);
@@ -45,7 +46,6 @@ const Register = () => {
         console.error('Error signing up:', error.message);
       } else {
         console.log('Sign up successful. User data:', data);
-
         navigate('/confirm-email');
       }
     } else {
@@ -57,7 +57,9 @@ const Register = () => {
     <div className="LoginRegister">
       <div className="split-left">
         <div className="login-register-content">
-          <h1 className="login-register-title">Secure Password Manager</h1>
+          <div className="title-box">
+            <h1 className="login-register-title">Secure Password Manager</h1>
+          </div>
           <p>Password Security Made Simple.</p>
           <p>Encrypted password management to protect your most sensitive credentials.</p>
         </div>
@@ -68,9 +70,9 @@ const Register = () => {
           <form onSubmit={handleRegister}>
             <input
               type="text"
-              placeholder="Full Name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <br />
             <input
@@ -87,7 +89,7 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <br />
-            <div className="validation-error">
+            <div className="error-message">
               {validationErrors.email && <p>{validationErrors.email}</p>}
               {validationErrors.password && <p>{validationErrors.password}</p>}
             </div>

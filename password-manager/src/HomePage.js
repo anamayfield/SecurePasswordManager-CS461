@@ -8,7 +8,9 @@ const Homepage = () => {
     <div className="Homepage">
       <div className="split-left">
         <div className="homepage-content">
-          <h1 className="homepage-title">Secure Password Manager</h1>
+          <div className="title-box">
+            <h1 className="homepage-title">Secure Password Manager</h1>
+          </div>
           <p>Password Security Made Simple.</p>
           <p>Encrypted password management to protect your most sensitive credentials.</p>
         </div>
