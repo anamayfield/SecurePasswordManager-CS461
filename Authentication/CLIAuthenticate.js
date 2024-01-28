@@ -39,9 +39,10 @@ async function signUp() {
     const { email, password } = await getUserCredentials();
   
     // Validate email and password
-    const validationResults = validateEmailAndPassword(email, password);
+    const emailValidationResults = validateEmail(email);
+    const passwordValidationResults = validatePassword(password);
   
-    if (validationResults.isEmailValid && validationResults.isPasswordValid) {
+    if (emailValidationResults.isEmailValid && passwordValidationResults.isPasswordValid) {
       // Proceed with registration
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -55,7 +56,8 @@ async function signUp() {
       }
     } else {
       // Display validation errors and do not attempt registration
-      console.error('Validation errors:', validationResults.errors);
+      console.error('Email Validation errors:', emailValidationResults.errors);
+      console.error('Password Validation errors:', passwordValidationResults.errors);
     }
   
     rl.close();
@@ -71,23 +73,33 @@ async function getUserCredentials() {
   return { email, password };
 }
 
-function validateEmailAndPassword(email, password) {
+function validateEmail(email){
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-  
-    const passwordMinLength = 8;
-  
-    const isEmailValid = emailPattern.test(email);
-    const isPasswordValid = password.length >= passwordMinLength;
-  
-    return {
-      isEmailValid,
-      isPasswordValid,
-      errors: {
-        email: isEmailValid ? null : 'Invalid email format',
-        password: isPasswordValid ? null : 'Password must be at least 8 characters',
-      },
-    };
-  }
 
-// signUp();
-signIn();
+    const isEmailValid = emailPattern.test(email);
+
+    return {
+        isEmailValid,
+        errors: 
+        {
+          email: isEmailValid ? null : 'Invalid email format',
+        },
+      };
+}
+
+function validatePassword(password){
+    const passwordMinLength = 8;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    const isPasswordValid = passwordPattern.test(password) && password.length >= passwordMinLength;
+
+    return {
+        isPasswordValid,
+        errors: {
+          password: isPasswordValid ? null : 'Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+      },
+      };
+}
+
+signUp();
+// signIn();
