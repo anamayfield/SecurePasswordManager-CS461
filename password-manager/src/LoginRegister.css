@@ -8,7 +8,16 @@
   .login-register-content {
     max-width: 400px; 
     text-align: left;
-    padding: 20px
+    padding: 30px
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 2px;
+    margin-top: 0px;
+    padding: 0px;
+    font-size: 14px;
+    font-weight: bold;
   }
 
   .login-register-title {
