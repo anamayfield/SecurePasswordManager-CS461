@@ -38,6 +38,14 @@ const verifyTOTP = (token, encryptedSecret) => {
     return speakeasy.totp.verify({ secret, encoding: 'base32', token, window: 1 });
 };
 
+
+const testFunctionTOTP = () => {
+  console.log("inside totp");
+};
+
+module.exports = { testTOTP, generateTOTP, verifyTOTP, encryptSecret, decryptSecret };
+
+
 // For testing purposes only
 const testSecret = speakeasy.generateSecret({ length: 20 }).base32;
 const encryptedSecret = encryptSecret(testSecret);
@@ -48,5 +56,5 @@ console.log(`Is TOTP Verified: ${isVerified}`);
 
 
 
-module.exports = { generateTOTP, verifyTOTP, encryptSecret, decryptSecret };
+module.exports = { generateTOTP, verifyTOTP, encryptSecret, decryptSecret, testFunctionTOTP };
 
