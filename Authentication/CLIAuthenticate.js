@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { testFunctionTOTP } from '../totp/TOTPGenerator-js';
 
 const supabase_url = 'https://dtwmtlfnskzbtsgndetr.supabase.co';
 const anon_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0d210bGZuc2t6YnRzZ25kZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE4ODQxMTMsImV4cCI6MjAxNzQ2MDExM30.qoYr-kxeXb4I3rRe-dzqaC__SWiAUt4g1YSsES01mxk';
@@ -27,6 +28,9 @@ async function signIn() {
         email,
         password,
     });
+
+    testFunctionTOTP();
+
     if (error) {
         console.error('Error signing in:', error.message);
       } else {
@@ -101,5 +105,5 @@ function validatePassword(password){
       };
 }
 
-signUp();
-// signIn();
+// signUp();
+signIn();
