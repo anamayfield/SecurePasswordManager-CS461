@@ -38,7 +38,7 @@ const sendTOTPByEmail = async (email, secret) => {
 };
 
 // Temporary Testing Section
-const testEmail = 'ana.alyse13@gmail.com'; 
+const testEmail = 'totptest01@gmail.com'; 
 const plainTestSecret = speakeasy.generateSecret({ length: 20 }).base32;
 const encryptedTestSecret = encryptSecret(plainTestSecret);
 
