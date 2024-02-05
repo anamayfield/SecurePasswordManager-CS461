@@ -8,9 +8,10 @@
   },
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.3",
-    "create-react-app": "^5.0.1"
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.1",
+    "speakeasy": "^2.0.0"
   }
 }
