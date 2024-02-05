@@ -29,11 +29,12 @@ async function signIn() {
         password,
     });
 
-    testFunctionTOTP();
-
     if (error) {
         console.error('Error signing in:', error.message);
       } else {
+        // Call TOTP
+        testFunctionTOTP();
+        
         console.log('Sign in successful. User data:', data);
       }
     rl.close();
