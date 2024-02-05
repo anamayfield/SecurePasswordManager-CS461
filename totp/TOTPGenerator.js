@@ -43,7 +43,7 @@ const testFunctionTOTP = () => {
   console.log("inside totp");
 };
 
-module.exports = { testTOTP, generateTOTP, verifyTOTP, encryptSecret, decryptSecret };
+// module.exports = { testTOTP, generateTOTP, verifyTOTP, encryptSecret, decryptSecret };
 
 
 // For testing purposes only
