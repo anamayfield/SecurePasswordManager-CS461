@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
+import { createSupaClient, signUp } from './Authentication/CLIAuthenticate';
 import './global-styles.css';
 import './LoginRegister.css';
 
@@ -9,50 +9,22 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();
 
-  const supabase_url = 'https://dtwmtlfnskzbtsgndetr.supabase.co';
-  const anon_key =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0d210bGZuc2t6YnRzZ25kZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE4ODQxMTMsImV4cCI6MjAxNzQ2MDExM30.qoYr-kxeXb4I3rRe-dzqaC__SWiAUt4g1YSsES01mxk';
-
-  const supabase = createClient(supabase_url, anon_key);
-
-  const validateInput = () => {
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const passwordMinLength = 8;
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-
-    const isEmailValid = emailPattern.test(email);
-    const isPasswordValid = passwordPattern.test(password) && password.length >= passwordMinLength;
-
-    const errors = {
-      email: isEmailValid ? null : 'Invalid email format',
-      password: isPasswordValid ? null : 'Password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, one number, and one special character',
-    };
-
-    setValidationErrors(errors);
-
-    return isEmailValid && isPasswordValid;
-  };
-
   const handleRegister = async () => {
-    if (validateInput()) {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+    const supabase = createSupaClient();
+    const response = await signUp(supabase, email, password);
 
-      if (error) {
-        console.error('Error signing up:', error.message);
-      } else {
-        console.log('Sign up successful. User data:', data);
-        navigate('/confirm-email');
-      }
-    } else {
-      console.error('Validation errors:', validationErrors);
+    if (response.error) {
+        console.error('Error signing up:', response.error.message);
+        setErrorMessage('Invalid email or password. Please try again.');
+    } else if (response.data) {
+        console.log('Sign up successful. User data:', response.data);
+        navigate('/verify');
     }
-  };
-
+};
+  
   return (
     <div className="LoginRegister">
       <div className="split-left">

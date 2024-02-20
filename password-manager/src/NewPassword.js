@@ -31,7 +31,7 @@ const NewPassword = () => {
     const minNumber = 1;
     const minSpecial = 1;
 
-    const passwordLength = 12; // Set the desired password length
+    const passwordLength = 12;
     const remainingLength =
       passwordLength - (minUpper + minLower + minNumber + minSpecial);
 
