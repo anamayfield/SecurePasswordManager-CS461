@@ -1,7 +1,10 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config({ path: '../.env' });
+console.log("TOTP_ENCRYPTION_KEY:", process.env.TOTP_ENCRYPTION_KEY);
 
-const speakeasy = require('speakeasy');
-const crypto = require('crypto');
+
+import speakeasy from 'speakeasy';
+import crypto from 'crypto';
 
 const algorithm = 'aes-256-cbc';
 const IV_LENGTH = 16; // For AES, this is always 16
@@ -39,9 +42,6 @@ const verifyTOTP = (token, encryptedSecret) => {
 };
 
 
-const testFunctionTOTP = () => {
-  console.log("inside totp");
-};
 
 // module.exports = { testTOTP, generateTOTP, verifyTOTP, encryptSecret, decryptSecret };
 
@@ -56,5 +56,6 @@ console.log(`Is TOTP Verified: ${isVerified}`);
 
 
 
-module.exports = { generateTOTP, verifyTOTP, encryptSecret, decryptSecret, testFunctionTOTP };
+
+export { generateTOTP, verifyTOTP, encryptSecret, decryptSecret };
 
