@@ -122,4 +122,5 @@ async function main(){
     await signOut();
 }
 
+// Testing
 main();
