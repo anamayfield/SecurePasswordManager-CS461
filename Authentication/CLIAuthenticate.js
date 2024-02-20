@@ -1,10 +1,10 @@
 const { createClient } = require('@supabase/supabase-js');
-const { testFunctionTOTP } = require('../totp/TOTPGenerator.js');
+// const { testFunctionTOTP } = require('../totp/TOTPGenerator.js');
 
-const supabase_url = 'https://dtwmtlfnskzbtsgndetr.supabase.co';
-const anon_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0d210bGZuc2t6YnRzZ25kZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE4ODQxMTMsImV4cCI6MjAxNzQ2MDExM30.qoYr-kxeXb4I3rRe-dzqaC__SWiAUt4g1YSsES01mxk';
+// const supabase_url = 'https://dtwmtlfnskzbtsgndetr.supabase.co';
+// const anon_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0d210bGZuc2t6YnRzZ25kZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE4ODQxMTMsImV4cCI6MjAxNzQ2MDExM30.qoYr-kxeXb4I3rRe-dzqaC__SWiAUt4g1YSsES01mxk';
 
-const supabase = createClient(supabase_url, anon_key);
+// const supabase = createClient(supabase_url, anon_key);
 
 const readline = require('readline');
 
@@ -13,6 +13,14 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+function createSupaClient(){
+    const supabase_url = 'https://dtwmtlfnskzbtsgndetr.supabase.co';
+    const anon_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0d210bGZuc2t6YnRzZ25kZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE4ODQxMTMsImV4cCI6MjAxNzQ2MDExM30.qoYr-kxeXb4I3rRe-dzqaC__SWiAUt4g1YSsES01mxk';
+
+    const supabaseClient = createClient(supabase_url, anon_key);
+    
+    return supabaseClient;
+}
 function promptUser(question) {
   return new Promise((resolve) => {
     rl.question(question, (answer) => {
@@ -21,7 +29,7 @@ function promptUser(question) {
   });
 }
 
-async function signIn() {
+async function signIn(supabase) {
     const { email, password } = await getUserCredentials();
 
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -33,14 +41,14 @@ async function signIn() {
         console.error('Error signing in:', error.message);
       } else {
         // Call TOTP
-        testFunctionTOTP();
+        // testFunctionTOTP();
         
         console.log('Sign in successful. User data:', data);
       }
     rl.close();
 }
 
-async function signUp() {
+async function signUp(supabase) {
     const { email, password } = await getUserCredentials();
   
     // Validate email and password
@@ -66,7 +74,18 @@ async function signUp() {
     }
   
     rl.close();
-  }
+}
+
+async function signOut(supabase){
+    const { error } = await supabase.auth.signOut()
+    console.log("INSHIDHGISHJLFSKLJF")
+
+    if (error){
+        console.error('Error signing out:', error.message);
+    } else{
+        console.log('Sign out successful.');
+    }
+}
 
 async function getUserCredentials() {
   const email = await promptUser('Enter your email: ');
@@ -106,5 +125,11 @@ function validatePassword(password){
       };
 }
 
-// signUp();
-signIn();
+async function main(){
+    supabase = await createSupaClient();
+    await signIn(supabase);
+    await signOut(supabase);
+}
+
+// Testing
+main();
