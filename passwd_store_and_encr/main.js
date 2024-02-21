@@ -49,6 +49,10 @@ app.use(express.json());
 const createAccountRoute = require('./routes/createaccount')(db);
 app.use('/', createAccountRoute);
 
+const deleteAccountRoute = require('./routes/deleteaccount')(db);
+app.use('/', deleteAccountRoute);
+
+
 // start the server
 const PORT = process.env.SERVER_PORT;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}...`));
