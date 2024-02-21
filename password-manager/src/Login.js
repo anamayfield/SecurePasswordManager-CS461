@@ -1,31 +1,25 @@
 import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
+import { createSupaClient, signIn } from './Authentication/CLIAuthenticate';
 import './global-styles.css';
 import './LoginRegister.css';
 
-const Login = () => {
+const Login = ({ supabase }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null); // New state for error
+  const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();
 
-  const supabase_url = 'https://dtwmtlfnskzbtsgndetr.supabase.co';
-  const anon_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0d210bGZuc2t6YnRzZ25kZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE4ODQxMTMsImV4cCI6MjAxNzQ2MDExM30.qoYr-kxeXb4I3rRe-dzqaC__SWiAUt4g1YSsES01mxk';
-
-  const supabase = createClient(supabase_url, anon_key);
-
   const handleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) {
-      console.error('Error signing in:', error.message);
-      setError('Invalid email or password. Please try again.');
-    } else {
-      console.log('Sign in successful. User data:', data);
-      navigate('/verify');
+    const supabase = createSupaClient();
+    const response = await signIn(supabase, email, password);
+
+    if (response.error) {
+        console.error('Error signing in:', response.error.message);
+        setErrorMessage('Invalid email or password. Please try again.');
+    } else if (response.data) {
+        console.log('Sign in successful. User data:', response.data);
+        navigate('/verify');
     }
   };
 
@@ -58,7 +52,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <br />
-            {error && <p className="error-message">{error}</p>}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
             <button type="button" onClick={handleLogin} className="button">
               LOGIN
             </button>

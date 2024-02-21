@@ -8,8 +8,6 @@ import Dashboard from './Dashboard';
 import Settings from './Settings';
 import NewPassword from './NewPassword';
 import TwoFactorAuthentication from './2FA';
-import ConfirmEmail from './ConfirmEmail';
-
 
 function App() {
   return (
@@ -23,7 +21,6 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/new-password" element={<NewPassword />} />
-          <Route path="/confirm-email" element={<ConfirmEmail />} />
         </Routes>
       </div>
     </Router>
