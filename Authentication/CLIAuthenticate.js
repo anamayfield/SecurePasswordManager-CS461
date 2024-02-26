@@ -164,10 +164,10 @@ async function getUserID(supabase){
 }
 
 async function main(){
-    supabase = await createSupaClient();
-    await signIn(supabase);
-    userId = await getUserID(supabase);
-    console.log(`The userId is: ${userId}`);
+    // supabase = await createSupaClient();
+    // await signIn(supabase);
+    // userId = await getUserID(supabase);
+    // console.log(`The userId is: ${userId}`);
     // await updateEmail(supabase);
     // await updatePassword(supabase);
     // await signIn(supabase);
