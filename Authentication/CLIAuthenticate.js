@@ -45,7 +45,6 @@ async function signIn(supabase) {
         
         console.log('Sign in successful. User data:', data);
       }
-    rl.close();
 }
 
 async function signUp(supabase) {
@@ -125,10 +124,49 @@ function validatePassword(password){
       };
 }
 
+async function updateEmail(supabase){
+    const email = await promptUser('New email: ');
+
+    const { data: { data, error } } = await supabase.auth.updateUser({
+        email: email
+    });
+
+    if (error) {
+        console.error('Error changing email: ', error.message);
+    } else {
+        console.log('Email sent. Check email to confirm change.');
+    }
+}
+
+async function updatePassword(supabase){
+    const newPassword = await promptUser('New password: ');
+
+    const passwordValidationResults = validatePassword(newPassword);
+
+    if (passwordValidationResults.isPasswordValid) {
+        // Proceed with registration
+        const { data, error } = await supabase.auth.updateUser({
+          password: newPassword
+        });
+    
+        if (error) {
+          console.error('Error changing password: ', error.message);
+        } else {
+          console.log('Password changed.');
+        }
+      } else {
+        console.error('Password Validation errors:', passwordValidationResults.errors);
+      }
+}
+
 async function main(){
     supabase = await createSupaClient();
     await signIn(supabase);
-    await signOut(supabase);
+    // await updateEmail(supabase);
+    await updatePassword(supabase);
+    // await signIn(supabase);
+    // await signOut(supabase);
+    rl.close();
 }
 
 // Testing
