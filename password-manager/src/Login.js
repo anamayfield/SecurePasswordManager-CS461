@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createSupaClient, signIn } from './Authentication/CLIAuthenticate';
+import { createSupaClient, signIn } from './Authentication/Authenticate';
+import { testFunctionTOTP } from './totp/testFunction';
 import './global-styles.css';
 import './LoginRegister.css';
 
@@ -19,6 +20,7 @@ const Login = ({ supabase }) => {
         setErrorMessage('Invalid email or password. Please try again.');
     } else if (response.data) {
         console.log('Sign in successful. User data:', response.data);
+        testFunctionTOTP()
         navigate('/verify');
     }
   };

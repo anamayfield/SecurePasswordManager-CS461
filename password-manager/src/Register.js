@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createSupaClient, signUp } from './Authentication/CLIAuthenticate';
+import { createSupaClient, signUp } from './Authentication/Authenticate';
+import { testFunctionTOTP } from './totp/testFunction';
 import './global-styles.css';
 import './LoginRegister.css';
 
@@ -22,10 +23,10 @@ const Register = () => {
     } else if (response.data) {
         console.log('Sign up successful. User data:', response.data);
         navigate('/verify');
-    }
-};
+    }  
+  };
   
-  return (
+  return (  
     <div className="LoginRegister">
       <div className="split-left">
         <div className="login-register-content">
