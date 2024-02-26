@@ -3,7 +3,7 @@ import './global-styles.css';
 import './2FA.css';
 
 const TwoFactorAuthentication = () => {
-  const [TOTP, setTOTP] = useState(['', '', '', '']);
+  const [TOTP, setTOTP] = useState(['', '', '', '', '' ,'']);
   const inputsRef = useRef([]);
 
   // The following code is adapted from code from GeeksforGeeks tutorial "Create OTP Input Field using HTML, CSS, and JavaScript"
@@ -60,6 +60,10 @@ const TwoFactorAuthentication = () => {
     const newTOTP = [...TOTP];
     newTOTP[index] = value;
     setTOTP(newTOTP);
+
+    if (value !== '' && index < TOTP.length - 1) {
+      inputsRef.current[index + 1].focus();
+    }
   };
 
   const handleVerificationSubmit = () => {
