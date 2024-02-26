@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ path: '../../.env' });
 
 import speakeasy from 'speakeasy';
 import nodemailer from 'nodemailer';
@@ -30,44 +30,53 @@ async function canSendEmail(email) {
 }
 
 const sendTOTPByEmail = async (email, secret) => {
-  console.log(`Attempting to send email to ${email}. Current timestamps:`, emailSendTimestamps[email]); // Initial logging
-
   if (!await canSendEmail(email)) {
     console.error('Rate limit exceeded for', email);
     return;
   }
 
+  // Generate the TOTP code
   const totp = generateTOTP(secret);
+  console.log(`Generated TOTP Code: ${totp}`); // Log the generated TOTP code to verify its value
+
+  // Ensure the TOTP code is being generated before proceeding
+  if (!totp) {
+    console.error('Failed to generate TOTP code.');
+    return;
+  }
+
+  // Prepare the email content with the TOTP code included
   let mailOptions = {
     from: EMAIL_USER,
     to: email,
     subject: 'Your TOTP Code',
-    text: `Your TOTP code is: ${totp}`,
-    html: `<p>Your TOTP code is: <b>${totp}</b></p>`
+    text: `Your TOTP code is: ${totp}`, // Incorporate the TOTP code in the email text
+    html: `<p>Your TOTP code is: <b>${totp}</b></p>` // Incorporate the TOTP code in the email HTML
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    emailSendTimestamps[email] = emailSendTimestamps[email] || [];
-    emailSendTimestamps[email].push(Date.now());
-    console.log(`Email sent successfully to ${email}. Updated timestamps:`, emailSendTimestamps[email]); // Logging on successful send
+    console.log(`Email sent successfully to ${email}.`);
   } catch (error) {
     console.error('Error sending email:', error);
   }
 };
 
-// Testing the rate limit
-const testEmail = 'totptest01@gmail.com';
-const plainTestSecret = speakeasy.generateSecret({ length: 20 }).base32;
-const encryptedTestSecret = encryptSecret(plainTestSecret);
+// // Testing the rate limit
+// const testEmail = 'totptest01@gmail.com';
+// const plainTestSecret = speakeasy.generateSecret({ length: 20 }).base32;
+// const encryptedTestSecret = encryptSecret(plainTestSecret);
 
-// Send multiple emails for testing
-async function testRateLimit() {
-  for (let i = 0; i < 10; i++) {
-    await sendTOTPByEmail(testEmail, encryptedTestSecret);
-  }
-}
+// // Send multiple emails for testing
+// async function testRateLimit() {
+//   for (let i = 0; i < 10; i++) {
+//     await sendTOTPByEmail(testEmail, encryptedTestSecret);
+//   }
+// }
 
-testRateLimit()
-  .then(() => console.log('Rate limit test completed'))
-  .catch(err => console.error('Error during rate limit test:', err));
+// testRateLimit()
+//   .then(() => console.log('Rate limit test completed'))
+//   .catch(err => console.error('Error during rate limit test:', err));
+
+export { sendTOTPByEmail, canSendEmail };
+
