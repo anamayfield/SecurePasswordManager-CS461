@@ -40,11 +40,9 @@ async function signIn(supabase) {
     if (error) {
         console.error('Error signing in:', error.message);
       } else {
-        // Call TOTP
-        // testFunctionTOTP();
-        
         console.log('Sign in successful. User data:', data);
       }
+      
 }
 
 async function signUp(supabase) {
@@ -77,7 +75,6 @@ async function signUp(supabase) {
 
 async function signOut(supabase){
     const { error } = await supabase.auth.signOut()
-    console.log("INSHIDHGISHJLFSKLJF")
 
     if (error){
         console.error('Error signing out:', error.message);
@@ -159,13 +156,22 @@ async function updatePassword(supabase){
       }
 }
 
+async function getUserID(supabase){
+    const { data: { user } } = await supabase.auth.getUser()
+
+    const userId = user ? user.id : null
+    return userId;
+}
+
 async function main(){
     supabase = await createSupaClient();
     await signIn(supabase);
+    userId = await getUserID(supabase);
+    console.log(`The userId is: ${userId}`);
     // await updateEmail(supabase);
-    await updatePassword(supabase);
+    // await updatePassword(supabase);
     // await signIn(supabase);
-    // await signOut(supabase);
+    await signOut(supabase);
     rl.close();
 }
 
