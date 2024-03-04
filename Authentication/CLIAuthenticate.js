@@ -40,12 +40,9 @@ async function signIn(supabase) {
     if (error) {
         console.error('Error signing in:', error.message);
       } else {
-        // Call TOTP
-        // testFunctionTOTP();
-        
         console.log('Sign in successful. User data:', data);
       }
-    rl.close();
+      
 }
 
 async function signUp(supabase) {
@@ -78,7 +75,6 @@ async function signUp(supabase) {
 
 async function signOut(supabase){
     const { error } = await supabase.auth.signOut()
-    console.log("INSHIDHGISHJLFSKLJF")
 
     if (error){
         console.error('Error signing out:', error.message);
@@ -125,10 +121,58 @@ function validatePassword(password){
       };
 }
 
+async function updateEmail(supabase){
+    const email = await promptUser('New email: ');
+
+    const { data: { data, error } } = await supabase.auth.updateUser({
+        email: email
+    });
+
+    if (error) {
+        console.error('Error changing email: ', error.message);
+    } else {
+        console.log('Email sent. Check email to confirm change.');
+    }
+}
+
+async function updatePassword(supabase){
+    const newPassword = await promptUser('New password: ');
+
+    const passwordValidationResults = validatePassword(newPassword);
+
+    if (passwordValidationResults.isPasswordValid) {
+        // Proceed with registration
+        const { data, error } = await supabase.auth.updateUser({
+          password: newPassword
+        });
+    
+        if (error) {
+          console.error('Error changing password: ', error.message);
+        } else {
+          console.log('Password changed.');
+        }
+      } else {
+        console.error('Password Validation errors:', passwordValidationResults.errors);
+      }
+}
+
+async function getUserID(supabase){
+    const { data: { user } } = await supabase.auth.getUser()
+
+    const userId = user ? user.id : null
+    return userId;
+}
+
 async function main(){
-    supabase = await createSupaClient();
-    await signIn(supabase);
+    // supabase = await createSupaClient();
+    // await signIn(supabase);
+    // userId = await getUserID(supabase);
+    // console.log(`The userId is: ${userId}`);
+    // await updateEmail(supabase);
+    // await updatePassword(supabase);
+    // await signIn(supabase);
     await signOut(supabase);
+    rl.close();
 }
 
 // Testing
