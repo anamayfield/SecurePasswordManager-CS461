@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createSupaClient, signIn } from './Authentication/Authenticate';
-import { testFunctionTOTP } from './totp/testFunction';
 import './global-styles.css';
 import './LoginRegister.css';
 
@@ -20,10 +19,21 @@ const Login = ({ supabase }) => {
         setErrorMessage('Invalid email or password. Please try again.');
     } else if (response.data) {
         console.log('Sign in successful. User data:', response.data);
-        testFunctionTOTP()
-        navigate('/verify');
+
+        // Trigger TOTP Email sending after successful login
+        fetch('http://localhost:3001/api/totp/send-totp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email }) // Assuming email is the user's email
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Email sent successfully', data);
+          navigate('/verify');
+        })
+        .catch(error => console.error('Error sending email:', error));
     }
-  };
+};
 
   return (
     <div className="LoginRegister">
