@@ -4,7 +4,15 @@ const router = express.Router();
 const connectionPool = require('../database/database');
 
 router.post('/', (req, res) => {
-    const { idToUpdate, parentAccountId, websiteUrl, emailOrUsername, password, notes } = req.body;
+    const { idToUpdate, parentAccountId, websiteUrl, emailOrUsername, password, notes, apiKey } = req.body;
+
+    if (!apiKey) {
+        return res.status(400).json({ error: 'API Key must be provided!' });
+    }
+
+    if (apiKey !== process.env.API_KEY) {
+        return res.status(400).json({ error: 'API Key must is invalid!' });
+    }
 
     if (!idToUpdate) {
         return res.status(400).json({ error: 'idToUpdate field must be provided!' });

@@ -4,7 +4,15 @@ const router = express.Router();
 const connectionPool = require('../database/database');
 
 router.post('/', (req, res) => {
-    const { idToDelete } = req.body;
+    const { idToDelete, apiKey } = req.body;
+
+    if (!apiKey) {
+        return res.status(400).json({ error: 'API Key must be provided!' });
+    }
+
+    if (apiKey !== process.env.API_KEY) {
+        return res.status(400).json({ error: 'API Key must is invalid!' });
+    }
 
     if (!idToDelete) {
         return res.status(400).json({ error: 'idToDelete field must be provided!' });
