@@ -13,7 +13,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-function createSupaClient(){
+async function createSupaClient(){
     const supabase_url = 'https://dtwmtlfnskzbtsgndetr.supabase.co';
     const anon_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0d210bGZuc2t6YnRzZ25kZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE4ODQxMTMsImV4cCI6MjAxNzQ2MDExM30.qoYr-kxeXb4I3rRe-dzqaC__SWiAUt4g1YSsES01mxk';
 
@@ -62,6 +62,8 @@ async function signUp(supabase) {
       if (error) {
         console.error('Error signing up:', error.message);
       } else {
+        userIDString = await getUserID(supabase);
+        await storeTOTPAndUser(supabase, 12345, userIDString);
         console.log('Sign up successful. User data:', data);
       }
     } else {
@@ -70,7 +72,42 @@ async function signUp(supabase) {
       console.error('Password Validation errors:', passwordValidationResults.errors);
     }
   
-    rl.close();
+}
+
+async function storeTOTPAndUser(supabase, totpCode, userIDStringToStore) {
+
+    const userID = await getUserID(supabase)
+
+    const {error1, data1, count } = await supabase
+        .from('totp')
+        .select('*', {count: 'exact'})
+
+    const idToPlace = count + 1
+
+    const { error } = await supabase
+        .from('totp')
+        .insert({ id: idToPlace, totp_code: totpCode, user_id_string: userIDStringToStore })
+
+    if (error){
+        console.log("ERRROR: ", error)
+    }
+    else{
+        console.log("Success")
+    }
+}
+
+async function getTOTPForUser(supabase, userIDStringToGet){
+    const { data, error } = await supabase
+        .from('totp')
+        .select()
+        .eq('user_id_string', userIDStringToGet)
+    
+    if (error){
+        console.log("ERROR: ", error);
+    } else{
+        console.log("Retrieved.")
+    }
+    return data[0].totp_code;
 }
 
 async function signOut(supabase){
@@ -164,15 +201,22 @@ async function getUserID(supabase){
 }
 
 async function main(){
-    // supabase = await createSupaClient();
+    supabase = await createSupaClient();
+    // await signUp(supabase);
+
+    await signIn(supabase);
+    userId = await getUserID(supabase)
+    totp = await getTOTPForUser(supabase, userId)
+    console.log(totp)
     // await signIn(supabase);
     // userId = await getUserID(supabase);
     // console.log(`The userId is: ${userId}`);
     // await updateEmail(supabase);
     // await updatePassword(supabase);
     // await signIn(supabase);
-    await signOut(supabase);
+    // await signOut(supabase);
     rl.close();
+    process.exit();
 }
 
 // Testing
