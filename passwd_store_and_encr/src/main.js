@@ -8,6 +8,9 @@ const port = 8080;
 
 app.use(express.json());
 
+const helloRouter = require('./routes/hello');
+app.use('/hello', helloRouter);
+
 const createRouter = require('./routes/create');
 app.use('/create', createRouter);
 
