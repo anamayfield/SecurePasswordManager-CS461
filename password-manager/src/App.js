@@ -8,6 +8,7 @@ import Dashboard from './Dashboard';
 import Settings from './Settings';
 import NewPassword from './NewPassword';
 import TwoFactorAuthentication from './2FA';
+import AccessPassword from './AccessPassword';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/new-password" element={<NewPassword />} />
+          <Route path="/access-password" element={<AccessPassword />} />
         </Routes>
       </div>
     </Router>
