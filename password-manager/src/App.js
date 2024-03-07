@@ -22,7 +22,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/new-password" element={<NewPassword />} />
-          <Route path="/access-password" element={<AccessPassword />} />
+          <Route path="/access-password/:id" element={<AccessPassword />} />
         </Routes>
       </div>
     </Router>

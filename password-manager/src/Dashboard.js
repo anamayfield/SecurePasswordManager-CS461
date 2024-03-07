@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './global-styles.css';
 import './Dashboard.css';
 
 const Dashboard = () => {
   const [passwords, setPasswords] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +43,10 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  const handleRowClick = (password) => {
+    navigate(`/access-password/${password.id}`, { state: { password } });
+  };
+
   return (
     <div className="Dashboard">
       <div className="sidebar">
@@ -74,7 +79,7 @@ const Dashboard = () => {
               </tr>
             ) : (
               passwords.map((password) => (
-                <tr key={password.id}>
+                <tr key={password.id} onClick={() => handleRowClick(password)}>
                   <td>{password.websiteUrl}</td>
                   <td>{password.emailOrUsername}</td>
                   <td>{password.notes}</td>
