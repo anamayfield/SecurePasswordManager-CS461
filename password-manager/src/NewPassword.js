@@ -5,11 +5,10 @@ import './NewPassword.css';
 
 const NewPassword = () => {
   const [formData, setFormData] = useState({
-    website: '',
-    name: '',
-    email: '',
-    category: '',
+    websiteUrl: '',
+    emailOrUsername: '',
     password: '',
+    notes: ''
   });
 
   const handleInputChange = (e) => {
@@ -42,14 +41,12 @@ const NewPassword = () => {
       return category.charAt(randomIndex);
     };
 
-    // Ensure at least one character from each category
     newPassword +=
       getRandomChar(uppercaseLetters) +
       getRandomChar(lowercaseLetters) +
       getRandomChar(numbers) +
       getRandomChar(specialChars);
 
-    // Generate the remaining characters
     for (let i = 0; i < remainingLength; i++) {
       const randomCategoryIndex = Math.floor(Math.random() * 4); // 0, 1, 2, or 3
       switch (randomCategoryIndex) {
@@ -77,11 +74,36 @@ const NewPassword = () => {
       password: newPassword,
     });
 
-    console.log('Password from state:', formData.password);
+    console.log('Generated password:', formData.password);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await fetch('https://cs462.judahparker.com/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          apiKey: 'x7hLkybNxzshSUKG',
+          parentAccountId: 100,
+          ...formData,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const newPasswordData = await response.json();
+      console.log('New Password Data:', newPasswordData);
+
+      } catch (error) {
+        console.error('Error submitting data:', error);
+      }
+
   };
 
   return (
@@ -106,47 +128,41 @@ const NewPassword = () => {
           <form onSubmit={handleSubmit}>
             <input 
               type="text"
-              placeholder="Website" 
-              value={formData.website} 
-              onChange={handleInputChange} 
-            />
-            <br />
-            <input 
-              type="text" 
-              placeholder="Name"
-              value={formData.name} 
+              placeholder="Website URL"
+              name="websiteUrl"
+              value={formData.websiteUrl} 
               onChange={handleInputChange} 
             />
             <br />
             <input 
               type="text" 
               placeholder="Email or Username"
-              value={formData.email} 
+              name="emailOrUsername"
+              value={formData.emailOrUsername} 
               onChange={handleInputChange} 
             />
             <br />
-            <select 
-              name="category"
-              placeholder="Category"
-              value={formData.category} 
-              onChange={handleInputChange}>
-              <option value="social">Social</option>
-              <option value="work">Work</option>
-            </select>
+            <input 
+              type="text" 
+              placeholder="Notes"
+              name="notes"
+              value={formData.notes} 
+              onChange={handleInputChange} 
+            />
             <br />
             <input 
               type="password" 
               placeholder="Password"
+              name="password"
               value={formData.password} 
               onChange={handleInputChange} 
             />
-            <button type="button" onClick={generateRandomPassword}className="button">
+            <button type="button" onClick={generateRandomPassword} className="button">
               Generate Random Password
             </button>
-            <br />
           </form>
           </div>
-          <button type="submit" className="button">
+          <button type="submit" onClick={handleSubmit} className="button">
               Save
           </button>
         </div>
