@@ -74,9 +74,9 @@ async function signUp(supabase) {
   
 }
 
-async function storeTOTPAndUser(supabase, totpCode, userIDStringToStore) {
+async function storeTOTPAndUser(supabase, totpCode) {
 
-    const userID = await getUserID(supabase)
+    const { data: { user } } = await supabase.auth.getUser();
 
     const {error1, data1, count } = await supabase
         .from('totp')
@@ -86,7 +86,7 @@ async function storeTOTPAndUser(supabase, totpCode, userIDStringToStore) {
 
     const { error } = await supabase
         .from('totp')
-        .insert({ id: idToPlace, totp_code: totpCode, user_id_string: userIDStringToStore })
+        .insert({ id: idToPlace, totp_code: totpCode, user_id_string: user.id })
 
     if (error){
         console.log("ERRROR: ", error)
