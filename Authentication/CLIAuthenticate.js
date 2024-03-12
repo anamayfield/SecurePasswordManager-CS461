@@ -96,11 +96,11 @@ async function storeTOTPAndUser(supabase, totpCode, userIDStringToStore) {
     }
 }
 
-async function getTOTPForUser(supabase, userIDStringToGet){
+async function getTOTPForUser(supabase, userParentIDToGet){
     const { data, error } = await supabase
         .from('totp')
         .select()
-        .eq('user_id_string', userIDStringToGet)
+        .eq('id', userParentIDToGet)
     
     if (error){
         console.log("ERROR: ", error);
@@ -193,11 +193,22 @@ async function updatePassword(supabase){
       }
 }
 
-async function getUserID(supabase){
-    const { data: { user } } = await supabase.auth.getUser()
+async function getUserParentID(supabase){
+    // Getting the current user's string id
+    const { data: { user } } = await supabase.auth.getUser();
 
-    const userId = user ? user.id : null
-    return userId;
+    // Getting the current user's primary key id
+    const { data, error } = await supabase
+        .from('totp')
+        .select()
+        .eq('user_id_string', user.id)
+    
+    if (error){
+        console.log("ERROR: ", error);
+    } else{
+        console.log("Retrieved.")
+    }
+    return data[0].id;
 }
 
 async function main(){
@@ -205,9 +216,10 @@ async function main(){
     // await signUp(supabase);
 
     await signIn(supabase);
-    userId = await getUserID(supabase)
-    totp = await getTOTPForUser(supabase, userId)
-    console.log(totp)
+    userId = await getUserParentID(supabase)
+    console.log(userId)
+    // totp = await getTOTPForUser(supabase, userParentID)
+    // console.log(totp)
     // await signIn(supabase);
     // userId = await getUserID(supabase);
     // console.log(`The userId is: ${userId}`);
