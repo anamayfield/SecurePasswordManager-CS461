@@ -47,9 +47,8 @@ const Register = () => {
         const totpData = await totpResponse.json();
         console.log('Email sent successfully', totpData);
 
-        const userId = userIdResponse;
-        cookies.set('userId', userId, { path: '/' });
-        console.log('User ID set in cookies:', userId);
+        cookies.set('userId', response.data.user.id, { path: '/' });
+        console.log('User ID set in cookies:', response.data.user.id);
         
         navigate('/verify');
 
