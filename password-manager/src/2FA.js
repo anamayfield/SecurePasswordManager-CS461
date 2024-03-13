@@ -77,7 +77,7 @@ const TwoFactorAuthentication = () => {
 
     // POST request to backend endpoint for TOTP verification
     try {
-      const response = await fetch('https://dashboard.heroku.com/apps/obscure-lake-93009/api/verify-totp', {
+      const response = await fetch('https://obscure-lake-93009-52cae5311953.herokuapp.com/api/verify-totp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ totpCode: fullCode, userId: userId }),

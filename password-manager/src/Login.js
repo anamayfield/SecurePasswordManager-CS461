@@ -33,7 +33,7 @@ const Login = ({ supabase }) => {
 
       try {
         // Trigger TOTP Email sending after successful login
-        const totpResponse = await fetch('https://dashboard.heroku.com/apps/obscure-lake-93009/api/totp/send-totp', {
+        const totpResponse = await fetch('https://obscure-lake-93009-52cae5311953.herokuapp.com/api/totp/send-totp', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email })
