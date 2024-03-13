@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './global-styles.css';
 import './2FA.css';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 const TwoFactorAuthentication = () => {
   const [TOTP, setTOTP] = useState(['', '', '', '', '' ,'']);
@@ -67,7 +69,7 @@ const TwoFactorAuthentication = () => {
   };
 
   const handleVerificationSubmit = async () => {
-    const userId = localStorage.getItem('userId'); // Retrieve the stored user ID
+    const userId = cookies.get('userId'); // Replaced localStorage retrieval cookies
     if (!userId) {
         console.error('User ID is undefined or not found.');
         return;
