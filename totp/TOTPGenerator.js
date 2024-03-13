@@ -43,4 +43,9 @@ const verifyTOTP = (token, encryptedSecret) => {
     return speakeasy.totp.verify({ secret, encoding: 'base32', token, window: 1 });
 };
 
-export { generateTOTP, verifyTOTP, encryptSecret, decryptSecret };
+const generateTOTPSecret = () => {
+    const secret = speakeasy.generateSecret({length: 20});
+    return secret.base32; // Use the base32 encoded secret
+};
+
+export { generateTOTP, verifyTOTP, encryptSecret, decryptSecret, generateTOTPSecret };
