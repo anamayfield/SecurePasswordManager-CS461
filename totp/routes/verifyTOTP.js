@@ -10,10 +10,10 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 router.post('/', async (req, res) => {
     const { totpCode, userId } = req.body;
-    console.log("Received userId for verification:", userId); // Add this line
+    console.log("Received userId for verification:", userId); 
 
     try {
-        // Fetch the TOTP code for the user from your database
+        // Fetch the TOTP code for the user fromdatabase
         const { data, error } = await supabase
             .from('totp')
             .select('totp_code') // Now fetching the encrypted secret key

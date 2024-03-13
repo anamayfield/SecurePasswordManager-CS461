@@ -66,11 +66,33 @@ const TwoFactorAuthentication = () => {
     }
   };
 
-  const handleVerificationSubmit = () => {
-    // Add 2FA verification logic here
-
+  const handleVerificationSubmit = async () => {
+    const userId = localStorage.getItem('userId'); // Retrieve the stored user ID
+    if (!userId) {
+        console.error('User ID is undefined or not found.');
+        return;
+    }
     const fullCode = TOTP.join('');
     console.log('Verifying code:', fullCode);
+
+    // POST request to backend endpoint for TOTP verification
+    try {
+      const response = await fetch('http://localhost:3001/api/verify-totp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ totpCode: fullCode, userId: userId }),
+      });      
+        const data = await response.json();
+        if (data.success) {
+            console.log('TOTP verification successful');
+            // Proceed with user authentication flow
+        } else {
+            console.error('TOTP verification failed');
+            // Handle verification failure
+        }
+    } catch (error) {
+        console.error('Error verifying TOTP code:', error);
+    }
   };
 
   return (
