@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { createSupaClient, signUp, getUserParentID, storeTOTPAndUser } from './Authentication/Authenticate';
+import { generateTOTPSecret } from '../../totp/TOTPGenerator'; 
 import './global-styles.css';
 import './LoginRegister.css';
 
@@ -23,7 +24,8 @@ const Register = () => {
         console.error('Error signing up:', response.error.message);
         setErrorMessage('Error signing up. Please try again.');
     } else if (response.data) {
-      await storeTOTPAndUser(supabase, 1); // Using 1 as temporary TOTP code for testing
+      const totpSecret = generateTOTPSecret(); // Generate TOTP secret
+      await storeTOTPAndUser(supabase, totpSecret); // Use the generated TOTP secret
       const userIdResponse = await getUserParentID(supabase);
 
       if (userIdResponse.error) {
