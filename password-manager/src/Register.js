@@ -34,7 +34,7 @@ const Register = () => {
 
       try {
         // Trigger TOTP Email sending after successful registration
-        const totpResponse = await fetch('http://localhost:3001/api/totp/send-totp', {
+        const totpResponse = await fetch('https://dashboard.heroku.com/apps/obscure-lake-93009/api/totp/send-totp', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: email })
