@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import { handleSignOut } from './HandleSignOut';
 import './global-styles.css';
 import './NewPassword.css';
 
+const cookies = new Cookies();
+
 const NewPassword = () => {
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(''); 
+  const userId = cookies.get('userId');
   const [formData, setFormData] = useState({
     websiteUrl: '',
     emailOrUsername: '',
     password: '',
     notes: ''
   });
+
+  if (!userId) {
+    navigate('/login');
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -88,7 +99,7 @@ const NewPassword = () => {
         },
         body: JSON.stringify({
           apiKey: 'x7hLkybNxzshSUKG',
-          parentAccountId: 100,
+          parentAccountId: userId,
           ...formData,
         }),
       });
@@ -99,11 +110,17 @@ const NewPassword = () => {
 
       const newPasswordData = await response.json();
       console.log('New Password Data:', newPasswordData);
+      navigate('/dashboard');
 
       } catch (error) {
         console.error('Error submitting data:', error);
+        setErrorMessage('Error adding password. Please try again.');
       }
 
+  };
+
+  const SignOut = async () => {
+    await handleSignOut(navigate, cookies);
   };
 
   return (
@@ -114,6 +131,7 @@ const NewPassword = () => {
           <li><Link to="/dashboard">All Passwords</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
+        <button onClick={handleSignOut} className="button">Sign Out</button>
       </div>
       <div className="main-content">
         <div className="top-bar">
@@ -122,7 +140,9 @@ const NewPassword = () => {
             <Link to="/newpassword" className="button">+ Add New</Link>
           </div>
         </div>
-        <h2>New Password</h2>
+        <div className="title">
+          <h2>New Password</h2>
+        </div>
         <div className="form">
           <div className="form-container">
           <form onSubmit={handleSubmit}>
@@ -157,12 +177,13 @@ const NewPassword = () => {
               value={formData.password} 
               onChange={handleInputChange} 
             />
-            <button type="button" onClick={generateRandomPassword} className="button">
+            <button type="button" onClick={generateRandomPassword} className="button3">
               Generate Random Password
             </button>
           </form>
           </div>
-          <button type="submit" onClick={handleSubmit} className="button">
+          {errorMessage && <p className="error-message2">{errorMessage}</p>}
+          <button type="submit" onClick={handleSubmit} className="button3">
               Save
           </button>
         </div>

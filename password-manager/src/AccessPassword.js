@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
 import './global-styles.css';
 import './AccessPassword.css';
 
+const cookies = new Cookies();
+
 const AccessPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const userId = cookies.get('userId');
   const [password, setPassword] = useState();
   const [copySuccess, setCopySuccess] = useState(false);
 
@@ -73,7 +77,7 @@ const AccessPassword = () => {
     const newData = {
       apiKey: 'x7hLkybNxzshSUKG',
       idToUpdate: password.id,
-      parentAccountId: 100,
+      parentAccountId: userId,
       websiteUrl: formData.website,
       emailOrUsername: formData.username,
       password: formData.password,
