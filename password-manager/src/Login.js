@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createSupaClient, signIn } from './Authentication/Authenticate';
+import { createSupaClient, signIn, getUserParentID } from './Authentication/Authenticate';
+import Cookies from 'universal-cookie';
 import './global-styles.css';
 import './LoginRegister.css';
+
+const cookies = new Cookies();
 
 const Login = ({ supabase }) => {
   const [email, setEmail] = useState('');
@@ -11,29 +14,50 @@ const Login = ({ supabase }) => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const supabase = createSupaClient();
-    const response = await signIn(supabase, email, password);
+    const supabaseClient = createSupaClient();
+    const response = await signIn(supabaseClient, email, password);
 
     if (response.error) {
-        console.error('Error signing in:', response.error.message);
-        setErrorMessage('Invalid email or password. Please try again.');
+      console.error('Error signing in:', response.error.message);
+      setErrorMessage('Invalid email or password. Please try again.');
     } else if (response.data) {
-        console.log('Sign in successful. User data:', response.data);
+      console.log('Sign in successful. User data:', response.data);
 
+      const userIdResponse = await getUserParentID(supabaseClient);
+
+      if (userIdResponse.error) {
+        console.error('Error getting user ID:', userIdResponse.error.message);
+        setErrorMessage('Error getting user ID. Please try again.');
+        return;
+      }
+
+      try {
         // Trigger TOTP Email sending after successful login
-        fetch('http://localhost:3001/api/totp/send-totp', {
+        const totpResponse = await fetch('http://localhost:3001/api/totp/send-totp', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email }) // Assuming email is the user's email
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Email sent successfully', data);
-          navigate('/verify');
-        })
-        .catch(error => console.error('Error sending email:', error));
+          body: JSON.stringify({ email: email })
+        });
+
+        if (!totpResponse.ok) {
+          throw new Error(`HTTP error! Status: ${totpResponse.status}`);
+        }
+
+        const totpData = await totpResponse.json();
+        console.log('Email sent successfully', totpData);
+
+        const userId = userIdResponse;
+        cookies.set('userId', userId, { path: '/' });
+        console.log('User ID set in cookies:', userId);
+
+        navigate('/verify');
+
+      } catch (error) {
+        console.error('Error sending TOTP email:', error);
+        setErrorMessage('Error sending TOTP email. Please try again.');
+      }
     }
-};
+  };
 
   return (
     <div className="LoginRegister">

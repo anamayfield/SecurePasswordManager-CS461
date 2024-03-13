@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createSupaClient, signUp } from './Authentication/Authenticate';
-import { testFunctionTOTP } from './totp/testFunction';
+import Cookies from 'universal-cookie';
+import { createSupaClient, signUp, getUserParentID, storeTOTPAndUser } from './Authentication/Authenticate';
 import './global-styles.css';
 import './LoginRegister.css';
+
+const cookies = new Cookies();
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -19,11 +21,43 @@ const Register = () => {
 
     if (response.error) {
         console.error('Error signing up:', response.error.message);
-        setErrorMessage('Invalid email or password. Please try again.');
+        setErrorMessage('Error signing up. Please try again.');
     } else if (response.data) {
-        console.log('Sign up successful. User data:', response.data);
+      await storeTOTPAndUser(supabase, 1); // Using 1 as temporary TOTP code for testing
+      const userIdResponse = await getUserParentID(supabase);
+
+      if (userIdResponse.error) {
+        console.error('Error getting user ID:', userIdResponse.error.message);
+        setErrorMessage('Error getting user ID. Please try again.');
+        return;
+      }
+
+      try {
+        // Trigger TOTP Email sending after successful registration
+        const totpResponse = await fetch('http://localhost:3001/api/totp/send-totp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+
+        if (!totpResponse.ok) {
+          throw new Error(`HTTP error! Status: ${totpResponse.status}`);
+        }
+
+        const totpData = await totpResponse.json();
+        console.log('Email sent successfully', totpData);
+
+        const userId = userIdResponse;
+        cookies.set('userId', userId, { path: '/' });
+        console.log('User ID set in cookies:', userId);
+        
         navigate('/verify');
-    }  
+
+      } catch (error) {
+        console.error('Error sending TOTP email:', error);
+        setErrorMessage('Error sending TOTP email. Please try again.');
+      }
+    } 
   };
   
   return (  
@@ -66,6 +100,8 @@ const Register = () => {
               {validationErrors.email && <p>{validationErrors.email}</p>}
               {validationErrors.password && <p>{validationErrors.password}</p>}
             </div>
+            <br />
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
             <button type="button" onClick={handleRegister} className="button">
               REGISTER
             </button>
