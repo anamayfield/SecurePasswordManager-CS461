@@ -52,15 +52,6 @@ const TwoFactorAuthentication = () => {
         input.addEventListener('keyup', handleKeyup);
       });
     }
-  
-    return () => {
-      if (inputs && inputs.length > 0) {
-        inputs.forEach((input) => {
-          input.removeEventListener('input', handleInput);
-          input.removeEventListener('keyup', handleKeyup);
-        });
-      }
-    };
   }, []);  
 
   const handleCodeChange = (index, e) => {
