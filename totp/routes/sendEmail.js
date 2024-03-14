@@ -33,7 +33,9 @@ router.post('/send-totp', async (req, res) => {
 
     await sendTOTPByEmail(email, encryptedSecret); // Use the encrypted secret to generate the TOTP code for the email
 
-    res.json({ success: true, message: 'TOTP email sent successfully.' });
+    // After successfully sending the TOTP email
+    res.json({ success: true, message: 'TOTP email sent successfully.', totpCode: totpSecret });
+
   } catch (error) {
     console.error('Error in TOTP process:', error);
     res.status(500).json({ success: false, message: 'Failed in TOTP process.', error: error.message });
