@@ -10,7 +10,7 @@ const cookies = new Cookies();
 const AccessPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const userId = cookies.get('userId');
+  const userParentId = cookies.get('userParentId');
   const [password, setPassword] = useState();
   const [copySuccess, setCopySuccess] = useState(false);
 
@@ -77,7 +77,7 @@ const AccessPassword = () => {
     const newData = {
       apiKey: 'x7hLkybNxzshSUKG',
       idToUpdate: password.id,
-      parentAccountId: userId,
+      parentAccountId: userParentId,
       websiteUrl: formData.website,
       emailOrUsername: formData.username,
       password: formData.password,

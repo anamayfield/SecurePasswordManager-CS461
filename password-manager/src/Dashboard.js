@@ -13,10 +13,10 @@ const Dashboard = () => {
   const [filteredPasswords, setFilteredPasswords] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-  const userId = cookies.get('userId');
+  const userParentId = cookies.get('userParentId');
 
   useEffect(() => {
-    if (!userId) {
+    if (!userParentId) {
       navigate('/login');
       return;
     }
@@ -30,7 +30,7 @@ const Dashboard = () => {
           },
           body: JSON.stringify({
             apiKey: 'x7hLkybNxzshSUKG',
-            parentAccountId: userId,
+            parentAccountId: userParentId,
           }),
         });
         if (!response.ok) {

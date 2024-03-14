@@ -10,7 +10,7 @@ const cookies = new Cookies();
 const NewPassword = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(''); 
-  const userId = cookies.get('userId');
+  const userParentId = cookies.get('userParentId');
   const [formData, setFormData] = useState({
     websiteUrl: '',
     emailOrUsername: '',
@@ -18,7 +18,7 @@ const NewPassword = () => {
     notes: ''
   });
 
-  if (!userId) {
+  if (!userParentId) {
     navigate('/login');
   }
 
@@ -99,7 +99,7 @@ const NewPassword = () => {
         },
         body: JSON.stringify({
           apiKey: 'x7hLkybNxzshSUKG',
-          parentAccountId: userId,
+          parentAccountId: userParentId,
           ...formData,
         }),
       });

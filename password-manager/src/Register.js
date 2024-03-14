@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { createSupaClient, signUp, getUserParentID, storeTOTPAndUser } from './Authentication/Authenticate';
+import { createSupaClient, signUp, getUserID, getUserParentID, storeTOTPAndUser } from './Authentication/Authenticate';
 import './global-styles.css';
 import './LoginRegister.css';
 
