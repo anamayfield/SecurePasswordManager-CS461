@@ -42,7 +42,7 @@ const Register = () => {
 
         // Assuming storeTOTPAndUser is modified to accept totpCode as an argument
         if (totpData.success && totpData.totpCode) {
-          await storeTOTPAndUser(supabase, totpData.totpCode);
+          await storeTOTPAndUser(supabase, totpData.totpCode, userId);
         }
 
         cookies.set('userId', userId, { path: '/' });
