@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createSupaClient, signIn, getUserParentID } from './Authentication/Authenticate';
+import { createSupaClient, signIn, getUserID, getUserParentID } from './Authentication/Authenticate';
 import Cookies from 'universal-cookie';
 import './global-styles.css';
 import './LoginRegister.css';
