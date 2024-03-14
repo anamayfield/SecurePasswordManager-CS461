@@ -13,7 +13,9 @@ const Dashboard = () => {
   const [filteredPasswords, setFilteredPasswords] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+
   const parentId = cookies.get('parentId');
+  console.log("ParentID in Dashboard:", parentId);
 
   useEffect(() => {
     if (!parentId) {

@@ -17,12 +17,12 @@ const TwoFactorAuthentication = () => {
     const handleInput = (e) => {
       const target = e.target;
       const val = target.value;
-
+  
       if (isNaN(val)) {
         target.value = '';
         return;
       }
-
+  
       if (val !== '') {
         const next = target.nextElementSibling;
         if (next) {
@@ -30,11 +30,11 @@ const TwoFactorAuthentication = () => {
         }
       }
     };
-
+  
     const handleKeyup = (e) => {
       const target = e.target;
       const key = e.key.toLowerCase();
-
+  
       if (key === 'backspace' || key === 'delete') {
         target.value = '';
         const prev = target.previousElementSibling;
@@ -44,20 +44,24 @@ const TwoFactorAuthentication = () => {
         return;
       }
     };
-
+  
     const inputs = inputsRef.current;
-    inputs.forEach((input) => {
-      input.addEventListener('input', handleInput);
-      input.addEventListener('keyup', handleKeyup);
-    });
-
-    return () => {
+    if (inputs && inputs.length > 0) {
       inputs.forEach((input) => {
-        input.removeEventListener('input', handleInput);
-        input.removeEventListener('keyup', handleKeyup);
+        input.addEventListener('input', handleInput);
+        input.addEventListener('keyup', handleKeyup);
       });
+    }
+  
+    return () => {
+      if (inputs && inputs.length > 0) {
+        inputs.forEach((input) => {
+          input.removeEventListener('input', handleInput);
+          input.removeEventListener('keyup', handleKeyup);
+        });
+      }
     };
-  }, []);
+  }, []);  
 
   const handleCodeChange = (index, e) => {
     const value = e.target.value;
