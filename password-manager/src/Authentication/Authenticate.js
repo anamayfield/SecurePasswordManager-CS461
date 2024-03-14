@@ -126,7 +126,6 @@ async function getUserParentID(supabase) {
 }
 
 async function storeTOTPAndUser(supabase, totpCode) {
-
     const { data: { user } } = await supabase.auth.getUser();
 
     const {error1, data1, count } = await supabase
