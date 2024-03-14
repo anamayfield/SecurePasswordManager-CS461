@@ -87,7 +87,7 @@ const TwoFactorAuthentication = () => {
         const data = await response.json();
         if (data.success) {
             console.log('TOTP verification successful');
-            // Proceed with user authentication flow
+            navigate('/dashboard')
         } else {
             console.error('TOTP verification failed');
             // Handle verification failure
