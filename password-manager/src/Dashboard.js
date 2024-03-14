@@ -52,7 +52,7 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [navigate, userParentId]);
+  }, [navigate, parentId]);
 
   useEffect(() => {
     const filtered = passwords.filter((password) =>
