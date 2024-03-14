@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { handleSignOut } from './HandleSignOut';
 import { Link } from 'react-router-dom';
 import './global-styles.css';
 import './AccessPassword.css';
@@ -139,6 +140,10 @@ const AccessPassword = () => {
     window.open(formData.website, '_blank');
   };
 
+  const SignOut = async () => {
+    await handleSignOut(navigate, cookies);
+  };
+
   return (
     <div className="AccessPassword">
       <div className="sidebar">
@@ -147,6 +152,7 @@ const AccessPassword = () => {
           <li><Link to="/dashboard">All Passwords</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
+        <button onClick={SignOut} className="button">Sign Out</button>
       </div>
       <div className="main-content">
         <div className="top-bar">

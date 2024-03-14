@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './global-styles.css';
 import './2FA.css';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const TwoFactorAuthentication = () => {
+  const navigate = useNavigate();
   const [TOTP, setTOTP] = useState(['', '', '', '', '' ,'']);
   const inputsRef = useRef([]);
 
