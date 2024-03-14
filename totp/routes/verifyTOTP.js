@@ -27,10 +27,13 @@ router.post('/', async (req, res) => {
         if (data) {
             const secretKey = data.totp_code; // Ensure this is a string
             console.log("Fetched secret key:", secretKey); // Log the fetched secret key
-            if (typeof secretKey !== 'string') {
-                console.error('Secret key is not a string:', secretKey);
-                return res.status(500).json({ message: 'Internal server error' });
+
+            // Check if the secretKey is in the correct format before proceeding
+            if (typeof secretKey !== 'string' || !secretKey.includes(':')) {
+                console.error('Secret key is not in the correct format:', secretKey);
+                return res.status(500).json({ message: 'Internal server error due to incorrect secret key format' });
             }
+
             const decryptedSecretKey = decryptSecret(secretKey); // Decrypt the secret key
             const isValid = verifyTOTP(totpCode, decryptedSecretKey); // Verify using the decrypted secret key
             

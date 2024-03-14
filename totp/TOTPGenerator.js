@@ -19,13 +19,18 @@ const encryptSecret = (text) => {
 };
 
 const decryptSecret = (encryptedText) => {
-    if (!encryptedText) {
-        console.error('Encrypted text is undefined or empty');
+    if (!encryptedText || !encryptedText.includes(':')) {
+        console.error('Encrypted text is undefined, empty, or in an incorrect format:', encryptedText);
         return '';
     }
+    console.log("Encrypted text received:", encryptedText);
     const textParts = encryptedText.split(':');
     const iv = Buffer.from(textParts[0], 'hex');
     const encrypted = textParts[1];
+
+    console.log("IV length:", iv.length);
+    console.log("Encrypted part length:", encrypted.length);
+
     const decipher = crypto.createDecipheriv(algorithm, Buffer.from(ENCRYPTION_KEY, 'hex'), iv);
     let decrypted = decipher.update(encrypted, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
