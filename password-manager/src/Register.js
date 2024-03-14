@@ -40,6 +40,11 @@ const Register = () => {
         const totpData = await totpResponse.json();
         console.log('Email sent successfully', totpData);
 
+        // Assuming storeTOTPAndUser is modified to accept totpCode as an argument
+        if (totpData.success && totpData.totpCode) {
+          await storeTOTPAndUser(supabase, totpData.totpCode);
+        }
+
         cookies.set('userId', userId, { path: '/' });
         console.log('User ID set in cookies:', userId);
         
