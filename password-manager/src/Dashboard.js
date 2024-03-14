@@ -15,7 +15,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const parentId = cookies.get('parentId');
-  console.log("ParentID in Dashboard:", parentId);
 
   useEffect(() => {
     if (!parentId) {
