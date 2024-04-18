@@ -145,10 +145,23 @@ function validateEmail(email){
 }
 
 function validatePassword(password){
-    const passwordMinLength = 8;
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    var isMinLength = false
+    if (password.length >= 8)
+    {
+        isMinLength = true
+    }
 
-    const isPasswordValid = passwordPattern.test(password) && password.length >= passwordMinLength;
+    const uppercasePattern = /[A-Z]/;
+    const lowercasePattern = /[a-z]/;
+    const specialPattern = /[!@#$%^&*(),.?":{}|<>]/;
+    const numberPattern = /\d/;
+
+    const hasUppercase = uppercasePattern.test(password);
+    const hasLowercase = lowercasePattern.test(password);
+    const hasSpecial = specialPattern.test(password);
+    const hasNumber = numberPattern.test(password);
+
+    const isPasswordValid = isMinLength && hasUppercase && hasLowercase && hasSpecial && hasNumber;
 
     return {
         isPasswordValid,
@@ -212,12 +225,12 @@ async function getUserParentID(supabase){
 }
 
 async function main(){
-    supabase = await createSupaClient();
+    // supabase = await createSupaClient();
     // await signUp(supabase);
 
-    await signIn(supabase);
-    userId = await getUserParentID(supabase)
-    console.log(userId)
+    // await signIn(supabase);
+    // userId = await getUserParentID(supabase)
+    // console.log(userId)
     // totp = await getTOTPForUser(supabase, userParentID)
     // console.log(totp)
     // await signIn(supabase);
@@ -227,6 +240,21 @@ async function main(){
     // await updatePassword(supabase);
     // await signIn(supabase);
     // await signOut(supabase);
+
+    // No number
+    console.log(validatePassword("Pa[swiej")); 
+    
+    // Not min length
+    console.log(validatePassword("[Passw1"));
+
+    // No capital
+    console.log(validatePassword("pass[word1"));
+
+    // No lowercase
+    console.log(validatePassword("PASS[WORD1"));
+
+    // Valid
+    console.log(validatePassword("Passwr1!"))
     rl.close();
     process.exit();
 }
