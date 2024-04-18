@@ -77,10 +77,23 @@ function validateEmail(email){
 }
 
 function validatePassword(password){
-    const passwordMinLength = 8;
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    var isMinLength = false
+    if (password.length >= 8)
+    {
+        isMinLength = true
+    }
 
-    const isPasswordValid = passwordPattern.test(password) && password.length >= passwordMinLength;
+    const uppercasePattern = /[A-Z]/;
+    const lowercasePattern = /[a-z]/;
+    const specialPattern = /[!@#$%^&*(),.?":{}|<>]/;
+    const numberPattern = /\d/;
+
+    const hasUppercase = uppercasePattern.test(password);
+    const hasLowercase = lowercasePattern.test(password);
+    const hasSpecial = specialPattern.test(password);
+    const hasNumber = numberPattern.test(password);
+
+    const isPasswordValid = isMinLength && hasUppercase && hasLowercase && hasSpecial && hasNumber;
 
     return {
         isPasswordValid,
