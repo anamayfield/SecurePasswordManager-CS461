@@ -21,7 +21,7 @@ const Register = () => {
 
     if (response.error) {
         console.error('Error signing up:', response.error.message);
-        setErrorMessage('Error signing up. Please try again.');
+        setErrorMessage(response.error.message + 'Please try again.');
     } else if (response.data) {
       const userId = response.data.user.id; // Assuming this is how you get the userId from the response
 
