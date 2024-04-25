@@ -1,3 +1,5 @@
+const { isApiKeyValid } = require('../apikey/apikey');
+
 const express = require('express');
 const router = express.Router();
 
@@ -10,8 +12,8 @@ router.post('/', (req, res) => {
         return res.status(400).json({ error: 'API Key must be provided!' });
     }
 
-    if (apiKey !== process.env.API_KEY) {
-        return res.status(400).json({ error: 'API Key must is invalid!' });
+    if (!isApiKeyValid(apiKey)) {
+        return res.status(400).json({ error: 'API Key is invalid!' });
     }
 
     if (!parentAccountId) {
