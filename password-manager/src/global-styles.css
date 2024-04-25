@@ -100,9 +100,9 @@ input {
 .error-message {
   background-color: var(--errorRed);
   color: black;
-  margin-top: 7px;
+  margin-top: 15px;
   margin-left: 20px;
-  padding: 10px;
+  padding: 18px;
   font-size: 14px;
   font-weight: bold;
   border-radius: 15px;
