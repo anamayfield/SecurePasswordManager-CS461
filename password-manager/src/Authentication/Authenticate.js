@@ -23,33 +23,37 @@ async function signIn(supabase, email, password) {
 }
 
 async function signUp(supabase, email, password) {
-  const emailValidationResults = validateEmail(email);
-  const passwordValidationResults = validatePassword(password);
-
-  if (emailValidationResults.isEmailValid && passwordValidationResults.isPasswordValid) {
-      try {
-          const { data, error } = await supabase.auth.signUp({
-              email,
-              password,
-          });
-
-          if (error) {
-              console.error('Error signing up:', error.message);
-              return { error };
-          }
-
-          console.log('Sign up successful. User data:', data);
-          return { data };
-      } catch (error) {
-          console.error('Error signing up:', error.message);
-          return { error };
-      }
-  } else {
+    const emailValidationResults = validateEmail(email);
+    const passwordValidationResults = validatePassword(password);
+  
+    if (!emailValidationResults.isEmailValid) {
       console.error('Email Validation errors:', emailValidationResults.errors);
+      return { error: { message: 'Email is invalid.' } };
+    }
+  
+    if (!passwordValidationResults.isPasswordValid) {
       console.error('Password Validation errors:', passwordValidationResults.errors);
-      return { error: { message: 'Validation errors. Registration aborted.' } };
+      return { error: { message: 'Password is invalid.' } };
+    }
+  
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+  
+      if (error) {
+        console.error('Error signing up:', error.message);
+        return { error };
+      }
+  
+      console.log('Sign up successful. User data:', data);
+      return { data };
+    } catch (error) {
+      console.error('Error signing up:', error.message);
+      return { error };
+    }
   }
-}
 
 async function signOut(supabase){
     const { error } = await supabase.auth.signOut()

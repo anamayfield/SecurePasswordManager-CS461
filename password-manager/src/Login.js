@@ -19,7 +19,7 @@ const Login = ({ supabase }) => {
 
     if (response.error) {
       console.error('Error signing in:', response.error.message);
-      setErrorMessage('Invalid email or password. Please try again.');
+      setErrorMessage(response.error.message + '. Please try again.');
     } else if (response.data) {
       console.log('Sign in successful. User data:', response.data);
 

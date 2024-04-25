@@ -105,17 +105,37 @@ const NewPassword = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        let errorMessage = '';
+        switch (response.status) {
+          case 400:
+            errorMessage = 'Bad request. Please check your input data.';
+            break;
+          case 404:
+            errorMessage = 'Not found. The requested resource does not exist.';
+            break;
+          case 500:
+            errorMessage = 'Internal server error. Please try again later.';
+            break;
+          default:
+            errorMessage = `HTTP error! Status: ${response.status}`;
+            break;
+        }
+        console.log(errorMessage);
+        throw new Error(errorMessage);
       }
 
       const newPasswordData = await response.json();
       console.log('New Password Data:', newPasswordData);
       navigate('/dashboard');
 
-      } catch (error) {
+    } catch (error) {
+      if (error instanceof TypeError && error.message === 'Load failed') {
+        setErrorMessage('Request timed out. Please try again later.');
+      } else {
         console.error('Error submitting data:', error);
         setErrorMessage('Error adding password. Please try again.');
       }
+    }
 
   };
 
@@ -131,7 +151,7 @@ const NewPassword = () => {
           <li><Link to="/dashboard">All Passwords</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
-        <button onClick={handleSignOut} className="button">Sign Out</button>
+        <button onClick={SignOut} className="button">Sign Out</button>
       </div>
       <div className="main-content">
         <div className="top-bar">

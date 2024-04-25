@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [filteredPasswords, setFilteredPasswords] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
   const parentId = cookies.get('parentId');
@@ -47,8 +48,14 @@ const Dashboard = () => {
           setLoading(false);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
+        if (error instanceof TypeError && error.message === 'Load failed') {
+          setErrorMessage('Request timed out. Please try again later.');
+          setLoading(false);
+        } else {
+          console.error('Error fetching user data:', error);
+          setErrorMessage('Error fetching user data. Please try again.');
+          setLoading(false);
+        }
       }
     };
 
@@ -121,6 +128,7 @@ const Dashboard = () => {
             )}
           </tbody>
         </table>
+        {errorMessage && <p className="error-message2">{errorMessage}</p>}
       </div>
     </div>
   );
