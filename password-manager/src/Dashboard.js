@@ -90,7 +90,9 @@ const Dashboard = () => {
           <li><Link to="/dashboard">All Passwords</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
-        <button onClick={signOut} className="button"><LogoutRoundedIcon/>Sign Out</button>
+        <button onClick={signOut} className="button">
+          <LogoutRoundedIcon /> Sign Out
+        </button>
       </div>
       <div className="main-content">
         <div className="top-bar">
