@@ -129,7 +129,7 @@ const NewPassword = () => {
       navigate('/dashboard');
 
     } catch (error) {
-      if (error.name === 'FetchError' && error.type === 'request-timeout') {
+      if (error instanceof TypeError && error.message === 'Load failed') {
         setErrorMessage('Request timed out. Please try again later.');
       } else {
         console.error('Error submitting data:', error);

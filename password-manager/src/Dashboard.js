@@ -48,12 +48,13 @@ const Dashboard = () => {
           setLoading(false);
         }
       } catch (error) {
-        if (error.name === 'FetchError' && error.type === 'request-timeout') {
+        if (error instanceof TypeError && error.message === 'Load failed') {
           setErrorMessage('Request timed out. Please try again later.');
           setLoading(false);
         } else {
-          console.error('Error submitting data:', error);
-          setErrorMessage('Error adding password. Please try again.');
+          console.error('Error fetching user data:', error);
+          setErrorMessage('Error fetching user data. Please try again.');
+          setLoading(false);
         }
       }
     };
@@ -96,7 +97,6 @@ const Dashboard = () => {
             <Link to="/new-password" className="button">+ Add New</Link>
           </div>
         </div>
-        {errorMessage && <div>Error: {errorMessage}</div>}
         <input
           type="text"
           placeholder="Search Passwords"
@@ -128,6 +128,7 @@ const Dashboard = () => {
             )}
           </tbody>
         </table>
+        {errorMessage && <p className="error-message2">{errorMessage}</p>}
       </div>
     </div>
   );
