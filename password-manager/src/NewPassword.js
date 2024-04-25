@@ -120,6 +120,7 @@ const NewPassword = () => {
             errorMessage = `HTTP error! Status: ${response.status}`;
             break;
         }
+        console.log(errorMessage);
         throw new Error(errorMessage);
       }
 
@@ -127,10 +128,14 @@ const NewPassword = () => {
       console.log('New Password Data:', newPasswordData);
       navigate('/dashboard');
 
-      } catch (error) {
+    } catch (error) {
+      if (error.name === 'FetchError' && error.type === 'request-timeout') {
+        setErrorMessage('Request timed out. Please try again later.');
+      } else {
         console.error('Error submitting data:', error);
         setErrorMessage('Error adding password. Please try again.');
       }
+    }
 
   };
 

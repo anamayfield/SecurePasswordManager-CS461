@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [filteredPasswords, setFilteredPasswords] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
   const parentId = cookies.get('parentId');
@@ -47,8 +48,13 @@ const Dashboard = () => {
           setLoading(false);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
+        if (error.name === 'FetchError' && error.type === 'request-timeout') {
+          setErrorMessage('Request timed out. Please try again later.');
+          setLoading(false);
+        } else {
+          console.error('Error submitting data:', error);
+          setErrorMessage('Error adding password. Please try again.');
+        }
       }
     };
 
@@ -90,6 +96,7 @@ const Dashboard = () => {
             <Link to="/new-password" className="button">+ Add New</Link>
           </div>
         </div>
+        {errorMessage && <div>Error: {errorMessage}</div>}
         <input
           type="text"
           placeholder="Search Passwords"

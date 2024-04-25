@@ -54,7 +54,6 @@ async function signUp(supabase, email, password) {
       return { error };
     }
   }
-  
 
 async function signOut(supabase){
     const { error } = await supabase.auth.signOut()
