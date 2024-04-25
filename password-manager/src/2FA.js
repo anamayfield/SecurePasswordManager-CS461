@@ -2,12 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './global-styles.css';
 import './2FA.css';
+
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const TwoFactorAuthentication = () => {
   const navigate = useNavigate();
   const [TOTP, setTOTP] = useState(['', '', '', '', '' ,'']);
+  const [errorMessage, setErrorMessage] = useState(null);
   const inputsRef = useRef([]);
 
   // The following code is adapted from code from GeeksforGeeks tutorial "Create OTP Input Field using HTML, CSS, and JavaScript"
@@ -80,15 +82,17 @@ const TwoFactorAuthentication = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ totpCode: fullCode, userId: userId }),
-      });      
-        const data = await response.json();
-        if (data.success) {
-            console.log('TOTP verification successful');
-            navigate('/dashboard')
-        } else {
-            console.error('TOTP verification failed');
-            // Handle verification failure
-        }
+      });   
+      const data = await response.json();   
+      if (response.status === 401) {
+        console.error('Unauthorized: Please check your credentials.');
+        setErrorMessage('TOTP verification failed. Please try again.');
+        return;
+      }
+      if (data.success) {
+        console.log('TOTP verification successful');
+          navigate('/dashboard')
+      }
     } catch (error) {
         console.error('Error verifying TOTP code:', error);
     }
@@ -113,6 +117,7 @@ const TwoFactorAuthentication = () => {
         ))}
       </div>
       <button className="button" onClick={handleVerificationSubmit}>SUBMIT</button>
+      {errorMessage && <p className="error-message2">{errorMessage}</p>}
     </div>
   );
 };

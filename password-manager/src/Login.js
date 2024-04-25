@@ -19,7 +19,7 @@ const Login = ({ supabase }) => {
 
     if (response.error) {
       console.error('Error signing in:', response.error.message);
-      setErrorMessage(response.error.message + '. Please try again.');
+      setErrorMessage('Invalid email or password. Please try again.');
     } else if (response.data) {
       console.log('Sign in successful. User data:', response.data);
 
@@ -49,16 +49,16 @@ const Login = ({ supabase }) => {
 
         // Assuming response.data contains the user object with a UUID `id`
         cookies.set('userId', response.data.user.id, { path: '/' });
-        console.log('User ID set in cookies:', response.data.user.id);
+        //console.log('User ID set in cookies:', response.data.user.id);
 
         cookies.set('parentId', userParentId, { path: '/' });
-        console.log('User Parent ID set in cookies:', userParentId);
+        //console.log('User Parent ID set in cookies:', userParentId);
 
         navigate('/verify');
 
       } catch (error) {
         console.error('Error sending TOTP email:', error);
-        setErrorMessage('Error sending TOTP email. Please try again.');
+        setErrorMessage('Error sending verification email. Please check your email and try again.');
       }
     }
   };
