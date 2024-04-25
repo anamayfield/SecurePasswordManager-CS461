@@ -202,7 +202,7 @@ const NewPassword = () => {
             </button>
           </form>
           </div>
-          {errorMessage && <p className="error-message2">{errorMessage}</p>}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit" onClick={handleSubmit} className="button3">
               Save
           </button>

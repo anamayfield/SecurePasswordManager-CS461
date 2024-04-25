@@ -4,7 +4,8 @@
     --forestGreen: #003A3A;
     --darkGreen: #00231D;
     --orange: #DC851F;
-    --yellow: #DC9A1F
+    --yellow: #DC9A1F;
+    --errorRed: #ED4337;
 
 }
 
@@ -96,10 +97,9 @@ input {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.error-message2 {
-  background-color: red;
+.error-message {
+  background-color: var(--errorRed);
   color: black;
-  margin-top: 2px;
   margin-top: 7px;
   margin-left: 20px;
   padding: 10px;

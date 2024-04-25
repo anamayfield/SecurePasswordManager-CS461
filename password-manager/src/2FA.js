@@ -117,7 +117,7 @@ const TwoFactorAuthentication = () => {
         ))}
       </div>
       <button className="button" onClick={handleVerificationSubmit}>SUBMIT</button>
-      {errorMessage && <p className="error-message2">{errorMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>
   );
 };

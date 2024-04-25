@@ -127,7 +127,7 @@ const Dashboard = () => {
             )}
           </tbody>
         </table>
-        {errorMessage && <p className="error-message2">{errorMessage}</p>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
     </div>
   );
