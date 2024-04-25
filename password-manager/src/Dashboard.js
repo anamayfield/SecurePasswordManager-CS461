@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from 'universal-cookie';
 import { handleSignOut } from './HandleSignOut';
 import './global-styles.css';
 import './Dashboard.css';
 
+import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [passwords, setPasswords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredPasswords, setFilteredPasswords] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
 
   const parentId = cookies.get('parentId');
 
@@ -75,11 +75,10 @@ const Dashboard = () => {
     navigate(`/access-password/${password.id}`, { state: { password } });
   };
 
-  const SignOut = async () => {
+  const signOut = async () => {
     await handleSignOut(navigate, cookies);
   };
   
-
   return (
     <div className="Dashboard">
       <div className="sidebar">
@@ -88,7 +87,7 @@ const Dashboard = () => {
           <li><Link to="/dashboard">All Passwords</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
-        <button onClick={SignOut} className="button">Sign Out</button>
+        <button onClick={signOut} className="button">Sign Out</button>
       </div>
       <div className="main-content">
         <div className="top-bar">
@@ -128,7 +127,7 @@ const Dashboard = () => {
             )}
           </tbody>
         </table>
-        {errorMessage && <p className="error-message2">{errorMessage}</p>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
     </div>
   );

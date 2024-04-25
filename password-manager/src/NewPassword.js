@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from 'universal-cookie';
 import { handleSignOut } from './HandleSignOut';
 import './global-styles.css';
 import './NewPassword.css';
 
+import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const NewPassword = () => {
@@ -59,7 +59,7 @@ const NewPassword = () => {
       getRandomChar(specialChars);
 
     for (let i = 0; i < remainingLength; i++) {
-      const randomCategoryIndex = Math.floor(Math.random() * 4); // 0, 1, 2, or 3
+      const randomCategoryIndex = Math.floor(Math.random() * 4);
       switch (randomCategoryIndex) {
         case 0:
           newPassword += getRandomChar(uppercaseLetters);
@@ -139,7 +139,7 @@ const NewPassword = () => {
 
   };
 
-  const SignOut = async () => {
+  const signOut = async () => {
     await handleSignOut(navigate, cookies);
   };
 
@@ -151,7 +151,7 @@ const NewPassword = () => {
           <li><Link to="/dashboard">All Passwords</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
-        <button onClick={SignOut} className="button">Sign Out</button>
+        <button onClick={signOut} className="button">Sign Out</button>
       </div>
       <div className="main-content">
         <div className="top-bar">
@@ -202,7 +202,7 @@ const NewPassword = () => {
             </button>
           </form>
           </div>
-          {errorMessage && <p className="error-message2">{errorMessage}</p>}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit" onClick={handleSubmit} className="button3">
               Save
           </button>
