@@ -97,11 +97,13 @@ input {
 }
 
 .error-message2 {
-  color: red;
+  background-color: red;
+  color: black;
   margin-top: 2px;
   margin-top: 7px;
   margin-left: 20px;
-  padding: 0px;
+  padding: 10px;
   font-size: 14px;
   font-weight: bold;
+  border-radius: 15px;
 }
