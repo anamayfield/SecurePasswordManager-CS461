@@ -21,6 +21,7 @@ async function createSupaClient(){
     
     return supabaseClient;
 }
+
 function promptUser(question) {
   return new Promise((resolve) => {
     rl.question(question, (answer) => {
@@ -224,6 +225,80 @@ async function getUserParentID(supabase){
     return data[0].id;
 }
 
+// Testing suite for testing the password requirements
+async function testPasswords()
+{
+    // Define test cases as an array of objects with input, expected output, and description
+    const testCases = [
+        { input: 'Password123!', expected: true, description: 'Valid password' },
+        { input: 'P@ss1', expected: false, description: 'Too short' },
+        { input: 'password123!', expected: false, description: 'No uppercase letters' },
+        { input: 'PASSWORD123!', expected: false, description: 'No lowercase letters' },
+        { input: 'Password!@', expected: false, description: 'No digits' },
+        { input: 'Password123', expected: false, description: 'No special characters' },
+        { input: 'Passw0rd!', expected: true, description: 'Valid minimum-length password' },
+        { input: 'P@ssw0rd!L0ng3r', expected: true, description: 'Longer password' }
+    ];
+
+    console.log(`\n----- Testing Suite for Password Validator ----- \n`)
+
+    // Running each test case
+    testCases.forEach((testCase, index) => {
+        const result = validatePassword(testCase.input).isPasswordValid;
+        console.log(`Test Case ${index + 1}: ${testCase.description}`);
+        console.log(`Input: '${testCase.input}'`);
+        console.log(`Expected Output: ${testCase.expected}`);
+        console.log(`Actual Output: ${result}`);
+
+        // Checking if the actual result matches the expected result
+        if (result === testCase.expected) {
+            console.log('Test Passed!\n');
+        } else {
+            console.log('Test Failed!\n');
+        }
+    });
+    console.log(`========================`)
+}
+
+// Testing suite for testing the email requirements
+async function testEmails()
+{
+    // Define test cases as an array of objects with input, expected output, and description
+    const testCases = [
+        { input: 'name@example.com', expected: true, description: 'Valid email' },
+        { input: 'name@example.co', expected: true, description: 'Valid email with different top-level domain' },
+        { input: 'name@sub.example.com', expected: true, description: 'Valid email with subdomain' },
+        { input: 'name@', expected: false, description: 'Missing domain' },
+        { input: '@example.com', expected: false, description: 'Missing local part' },
+        { input: 'nameexample.com', expected: false, description: 'Missing @' },
+        { input: 'name@com', expected: false, description: 'Invalid domain' },
+        { input: 'name@example.', expected: false, description: 'Missing top-level domain' },
+        { input: 'name@@example.com', expected: false, description: 'Multiple @ symbols' },
+        { input: 'name@example.com.', expected: false, description: 'Trailing dot in domain' }
+    ];
+
+    console.log(`\n----- Testing Suite for Email Validator -----\n`)
+
+    // Run each test case
+    testCases.forEach((testCase, index) => {
+        const result = validateEmail(testCase.input).isEmailValid;
+        console.log(`Test Case ${index + 1}: ${testCase.description}`);
+        console.log(`Input: '${testCase.input}'`);
+        console.log(`Expected Output: ${testCase.expected}`);
+        console.log(`Actual Output: ${result}`);
+
+        // Check if the actual result matches the expected result
+        if (result === testCase.expected) {
+            console.log('Test Passed!\n');
+        } else {
+            console.log('Test Failed!\n');
+        }
+    });
+    console.log(`========================`)
+}
+
+
+
 async function main(){
     // supabase = await createSupaClient();
     // await signUp(supabase);
@@ -241,20 +316,12 @@ async function main(){
     // await signIn(supabase);
     // await signOut(supabase);
 
-    // No number
-    console.log(validatePassword("Pa[swiej")); 
-    
-    // Not min length
-    console.log(validatePassword("[Passw1"));
+    // Test suite for password validator
+    testPasswords();
 
-    // No capital
-    console.log(validatePassword("pass[word1"));
+    // Test suite for email validator
+    testEmails();
 
-    // No lowercase
-    console.log(validatePassword("PASS[WORD1"));
-
-    // Valid
-    console.log(validatePassword("Passwr1!"))
     rl.close();
     process.exit();
 }
