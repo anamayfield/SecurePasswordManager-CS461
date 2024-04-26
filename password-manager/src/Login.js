@@ -5,6 +5,9 @@ import Cookies from 'universal-cookie';
 import './global-styles.css';
 import './LoginRegister.css';
 
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import LockRoundedIcon from '@mui/icons-material/LockRounded';
+
 const cookies = new Cookies();
 
 const Login = ({ supabase }) => {
@@ -78,19 +81,25 @@ const Login = ({ supabase }) => {
         <div className="form">
           <h2 className="login-register-form-title">Welcome back</h2>
           <form>
-            <input
-              type="text"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <div className="input-container">
+              <EmailRoundedIcon className="input-icon" />
+              <input
+                type="text"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
             <br />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="input-container">
+              <LockRoundedIcon className="input-icon" />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
             <br />
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             <button type="button" onClick={handleLogin} className="button">

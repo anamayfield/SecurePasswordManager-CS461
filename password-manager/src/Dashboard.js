@@ -110,7 +110,7 @@ const Dashboard = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-        <SearchRoundedIcon className="search-icon" />
+          <SearchRoundedIcon className="search-icon"/>
         </div>
         <table className="passwords-table">
           <thead>

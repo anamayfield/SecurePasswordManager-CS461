@@ -244,9 +244,13 @@ const AccessPassword = () => {
           <div className="divider"></div>
           <div className="button-container">
             <button className="button2" onClick={openWebsite}>Visit website</button>
-            <button className="button2" onClick={copyToClipboard}>Copy password</button>
-            <button onClick={handleDeletePassword} className="button2">
+
+            <button onClick={copyToClipboard} className="button2">
               <ContentCopyRoundedIcon style={{ verticalAlign: 'middle' }} /> 
+              <span style={{ verticalAlign: 'middle' }}>Copy password</span>
+            </button>
+            <button onClick={handleDeletePassword} className="button2">
+              <DeleteForeverRoundedIcon style={{ verticalAlign: 'middle' }} /> 
               <span style={{ verticalAlign: 'middle' }}>Delete password</span>
             </button>
             {copySuccess && <p className="copyMessage">Password successfully copied to clipboard.</p>}

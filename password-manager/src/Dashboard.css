@@ -39,10 +39,10 @@
   
   .main-content {
     flex: 1;
+    flex-direction: column;
   }
 
-  .search-bar{
-    position: relative;
+  .search-bar {
     width: 400px;
     padding: 12px;
     margin-left: 20px;
@@ -97,5 +97,10 @@
     right: 10px;
     transform: translateY(-50%);
     cursor: pointer;
+    color: var(--cream);
   }
-  
+
+  .search-container {
+    position: relative;
+    display: inline-block;
+  }
