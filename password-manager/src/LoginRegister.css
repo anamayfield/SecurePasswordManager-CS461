@@ -35,5 +35,9 @@
     transform: translateY(-50%);
     color: #000000;
   }
+
+  .input {
+    margin-left: 20px;
+  }
   
   

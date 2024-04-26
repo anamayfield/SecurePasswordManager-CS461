@@ -104,10 +104,8 @@ const Register = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="error-message">
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-            </div>
             <br />
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
             <button type="button" onClick={handleRegister} className="button">
               REGISTER
             </button>
