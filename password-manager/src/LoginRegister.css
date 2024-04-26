@@ -25,20 +25,20 @@
   }
 
   .input-container {
-    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
   }
   
   .input-icon {
     position: absolute;
     top: 50%;
-    left: 10px;
     transform: translateY(-50%);
     color: #000000;
   }
 
   .input-field {
-    padding-left: 30px;
-    width: calc(100% - 30px);
+    width: 100%;
   }
   
   

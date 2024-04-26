@@ -76,7 +76,7 @@ const Register = () => {
           <h2 className="login-register-form-title">Sign up to get started</h2>
           <form onSubmit={handleRegister}>
             <div className="input-container">
-              <PersonRoundedIcon className="input-icon" />
+              <i className="material-icons input-icon"><PersonRoundedIcon /></i>
               <input
                 type="text"
                 placeholder="Name"
