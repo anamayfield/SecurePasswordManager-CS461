@@ -88,6 +88,7 @@ const Login = ({ supabase }) => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="input-field"
               />
             </div>
             <br />
@@ -98,6 +99,7 @@ const Login = ({ supabase }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="input-field"
               />
             </div>
             <br />

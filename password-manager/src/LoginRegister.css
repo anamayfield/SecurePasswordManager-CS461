@@ -36,8 +36,9 @@
     color: #000000;
   }
 
-  .input {
-    margin-left: 20px;
+  .input-field {
+    padding-left: 30px;
+    width: calc(100% - 30px);
   }
   
   
