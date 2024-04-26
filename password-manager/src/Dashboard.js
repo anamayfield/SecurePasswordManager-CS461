@@ -91,7 +91,8 @@ const Dashboard = () => {
           <li><Link to="/settings">Settings</Link></li>
         </ul>
         <button onClick={signOut} className="button">
-          <LogoutRoundedIcon /> Sign Out
+          <LogoutRoundedIcon style={{ verticalAlign: 'middle' }} /> 
+          <span style={{ verticalAlign: 'middle' }}>Sign Out</span>
         </button>
       </div>
       <div className="main-content">
@@ -101,14 +102,16 @@ const Dashboard = () => {
             <Link to="/new-password" className="button">+ Add New</Link>
           </div>
         </div>
-        <input
-          type="text"
-          placeholder="Search Passwords"
-          className="search-bar"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search Passwords"
+            className="search-bar"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         <SearchRoundedIcon className="search-icon" />
+        </div>
         <table className="passwords-table">
           <thead>
             <tr>
