@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { createSupaClient, signUp, getUserID, getUserParentID, storeTOTPAndUser } from './Authentication/Authenticate';
+import { createSupaClient, signUp, storeTOTPAndUser } from './Authentication/Authenticate';
 import './global-styles.css';
 import './LoginRegister.css';
+
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import LockRoundedIcon from '@mui/icons-material/LockRounded';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 
 const cookies = new Cookies();
 
@@ -11,7 +15,6 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [validationErrors, setValidationErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();
 
@@ -72,36 +75,45 @@ const Register = () => {
         <div className="form">
           <h2 className="login-register-form-title">Sign up to get started</h2>
           <form onSubmit={handleRegister}>
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <br />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <br />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <br />
-            <div className="error-message">
-              {validationErrors.email && <p>{validationErrors.email}</p>}
-              {validationErrors.password && <p>{validationErrors.password}</p>}
+            <div className="input-container">
+              <i className="material-icons input-icon"><PersonRoundedIcon /></i>
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="input-field"
+              />
             </div>
             <br />
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <div className="input-container">
+              <EmailRoundedIcon className="input-icon" />
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input-field"
+              />
+            </div>
+            <br />
+            <div className="input-container">
+              <LockRoundedIcon className="input-icon" />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input-field"
+              />
+            </div>
             <button type="button" onClick={handleRegister} className="button">
               REGISTER
             </button>
+            <br />
+            <span className={`error-message ${errorMessage ? 'visible' : ''}`}>
+              {errorMessage}
+            </span>
           </form>
         </div>
       </div>

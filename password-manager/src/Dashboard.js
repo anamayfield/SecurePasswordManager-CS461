@@ -4,6 +4,9 @@ import { handleSignOut } from './HandleSignOut';
 import './global-styles.css';
 import './Dashboard.css';
 
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
@@ -87,7 +90,10 @@ const Dashboard = () => {
           <li><Link to="/dashboard">All Passwords</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
-        <button onClick={signOut} className="button">Sign Out</button>
+        <button onClick={signOut} className="button">
+          <LogoutRoundedIcon style={{ verticalAlign: 'middle' }} /> 
+          <span style={{ verticalAlign: 'middle' }}>Sign Out</span>
+        </button>
       </div>
       <div className="main-content">
         <div className="top-bar">
@@ -96,13 +102,16 @@ const Dashboard = () => {
             <Link to="/new-password" className="button">+ Add New</Link>
           </div>
         </div>
-        <input
-          type="text"
-          placeholder="Search Passwords"
-          className="search-bar"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search Passwords"
+            className="search-bar"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <SearchRoundedIcon className="search-icon"/>
+        </div>
         <table className="passwords-table">
           <thead>
             <tr>
@@ -127,7 +136,9 @@ const Dashboard = () => {
             )}
           </tbody>
         </table>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        <span className={`error-message ${errorMessage ? 'visible' : ''}`}>
+              {errorMessage}
+        </span>
       </div>
     </div>
   );

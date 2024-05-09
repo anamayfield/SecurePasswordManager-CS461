@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom';
 import './global-styles.css';
 import './AccessPassword.css';
 
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+
 const cookies = new Cookies();
 
 const AccessPassword = () => {
@@ -140,7 +145,7 @@ const AccessPassword = () => {
     window.open(formData.website, '_blank');
   };
 
-  const SignOut = async () => {
+  const signOut = async () => {
     await handleSignOut(navigate, cookies);
   };
 
@@ -152,7 +157,10 @@ const AccessPassword = () => {
           <li><Link to="/dashboard">All Passwords</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
-        <button onClick={SignOut} className="button">Sign Out</button>
+        <button onClick={signOut} className="button">
+          <LogoutRoundedIcon style={{ verticalAlign: 'middle' }} /> 
+          <span style={{ verticalAlign: 'middle' }}>Sign Out</span>
+        </button>
       </div>
       <div className="main-content">
         <div className="top-bar">
@@ -236,8 +244,15 @@ const AccessPassword = () => {
           <div className="divider"></div>
           <div className="button-container">
             <button className="button2" onClick={openWebsite}>Visit website</button>
-            <button className="button2" onClick={copyToClipboard}>Copy password</button>
-            <button onClick={handleDeletePassword} className="button2">Delete password</button>
+
+            <button onClick={copyToClipboard} className="button2">
+              <ContentCopyRoundedIcon style={{ verticalAlign: 'middle' }} /> 
+              <span style={{ verticalAlign: 'middle' }}>Copy password</span>
+            </button>
+            <button onClick={handleDeletePassword} className="button2">
+              <DeleteForeverRoundedIcon style={{ verticalAlign: 'middle' }} /> 
+              <span style={{ verticalAlign: 'middle' }}>Delete password</span>
+            </button>
             {copySuccess && <p className="copyMessage">Password successfully copied to clipboard.</p>}
           </div>
         </div>

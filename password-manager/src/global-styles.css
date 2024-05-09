@@ -6,11 +6,10 @@
     --orange: #DC851F;
     --yellow: #DC9A1F;
     --errorRed: #ED4337;
-
 }
 
 .button {
-    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 15px;
     font-size: 16px;
     text-align: center;
@@ -22,6 +21,7 @@
     border: none;
     border-radius: 15px;
     cursor: pointer;
+    align-items: center;
   }
 
 .button:hover {
@@ -30,11 +30,11 @@
 
 .form {
   max-width: 400px;
-  text-align: left;
+  text-align: center;
 }
 
 .form input {
-  width: 250px;
+  width: 350px;
   font-size: 16px;
   padding: 10px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
@@ -46,20 +46,19 @@
 }
 
 input {
-  width: 250px;
+  width: 350px;
   font-size: 16px;
   padding: 10px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
   background-color: lightgrey;
   border-radius: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border: none;
   color: black;
 }
 
 .content {
   max-width: 400px;
-  text-align: left;
   padding: 20px;
 }
   
@@ -77,7 +76,7 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
   
 .split-right {
   flex: 1;
@@ -85,6 +84,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;  /* Stack children vertically */
 }
 
 .title-box{
@@ -98,12 +98,18 @@ input {
 }
 
 .error-message {
-  background-color: var(--errorRed);
-  color: black;
-  margin-top: 15px;
-  margin-left: 20px;
-  padding: 18px;
-  font-size: 14px;
+  min-height: 20px;
+  visibility: hidden;
+  opacity: 0;
   font-weight: bold;
-  border-radius: 15px;
+  color: var(--errorRed);
+  transition: opacity 0.3s ease;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.error-message.visible {
+  visibility: visible;
+  opacity: 1;
+  text-align: center;
 }

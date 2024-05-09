@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { handleSignOut } from './HandleSignOut';
 import './global-styles.css';
 import './NewPassword.css';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -151,7 +152,10 @@ const NewPassword = () => {
           <li><Link to="/dashboard">All Passwords</Link></li>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
-        <button onClick={signOut} className="button">Sign Out</button>
+        <button onClick={signOut} className="button">
+          <LogoutRoundedIcon style={{ verticalAlign: 'middle' }} /> 
+          <span style={{ verticalAlign: 'middle' }}>Sign Out</span>
+        </button>
       </div>
       <div className="main-content">
         <div className="top-bar">
@@ -202,10 +206,12 @@ const NewPassword = () => {
             </button>
           </form>
           </div>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit" onClick={handleSubmit} className="button3">
               Save
           </button>
+          <span className={`error-message ${errorMessage ? 'visible' : ''}`}>
+              {errorMessage}
+          </span>
         </div>
       </div>
     </div>

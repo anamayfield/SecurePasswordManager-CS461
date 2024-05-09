@@ -39,9 +39,10 @@
   
   .main-content {
     flex: 1;
+    flex-direction: column;
   }
 
-  .search-bar{
+  .search-bar {
     width: 400px;
     padding: 12px;
     margin-left: 20px;
@@ -88,4 +89,18 @@
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+  }
+
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--cream);
+  }
+
+  .search-container {
+    position: relative;
+    display: inline-block;
   }
