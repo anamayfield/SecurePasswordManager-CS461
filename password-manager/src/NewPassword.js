@@ -206,10 +206,12 @@ const NewPassword = () => {
             </button>
           </form>
           </div>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <button type="submit" onClick={handleSubmit} className="button3">
               Save
           </button>
+          <span className={`error-message ${errorMessage ? 'visible' : ''}`}>
+              {errorMessage}
+          </span>
         </div>
       </div>
     </div>

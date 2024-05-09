@@ -145,7 +145,7 @@ const AccessPassword = () => {
     window.open(formData.website, '_blank');
   };
 
-  const SignOut = async () => {
+  const signOut = async () => {
     await handleSignOut(navigate, cookies);
   };
 

@@ -107,11 +107,13 @@ const Register = () => {
                 className="input-field"
               />
             </div>
-            <br />
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
             <button type="button" onClick={handleRegister} className="button">
               REGISTER
             </button>
+            <br />
+            <span className={`error-message ${errorMessage ? 'visible' : ''}`}>
+              {errorMessage}
+            </span>
           </form>
         </div>
       </div>

@@ -15,7 +15,7 @@ const Login = ({ supabase }) => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();
-
+  
   const handleLogin = async () => {
     const supabaseClient = createSupaClient();
     const response = await signIn(supabaseClient, email, password);
@@ -25,7 +25,6 @@ const Login = ({ supabase }) => {
       setErrorMessage('Invalid email or password. Please try again.');
     } else if (response.data) {
       console.log('Sign in successful. User data:', response.data);
-
       const userParentId = await getUserParentID(supabaseClient); // Parent ID set for use with password DB
       const userIdResponse = await getUserID(supabaseClient);
 
@@ -103,10 +102,13 @@ const Login = ({ supabase }) => {
               />
             </div>
             <br />
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
             <button type="button" onClick={handleLogin} className="button">
               LOGIN
             </button>
+            <br />
+            <span className={`error-message ${errorMessage ? 'visible' : ''}`}>
+              {errorMessage}
+            </span>
           </form>
         </div>
       </div>

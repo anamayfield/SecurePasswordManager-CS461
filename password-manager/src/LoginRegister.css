@@ -6,16 +6,13 @@
   }
   
   .login-register-content {
-    max-width: 400px; 
-    text-align: left;
-    padding: 30px
+    max-width: 350px; 
   }
 
   .login-register-title {
     font-size: 50px;
     font-weight: 800;
     color: var(--cream);
-    text-align: left;
   }
 
   .login-register-form-title {
@@ -25,20 +22,22 @@
   }
 
   .input-container {
-    display: flex;
-    align-items: center;
+    position: relative;
     width: 100%;
   }
   
   .input-icon {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 15%;
+    left: 325px;
+    display: flex;
+    align-items: center;
     color: #000000;
   }
 
   .input-field {
-    width: 100%;
+    padding-left: 50px;
   }
+
   
   

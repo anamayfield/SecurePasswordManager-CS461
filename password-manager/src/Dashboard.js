@@ -136,7 +136,9 @@ const Dashboard = () => {
             )}
           </tbody>
         </table>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        <span className={`error-message ${errorMessage ? 'visible' : ''}`}>
+              {errorMessage}
+        </span>
       </div>
     </div>
   );
