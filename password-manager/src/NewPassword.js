@@ -93,7 +93,7 @@ const NewPassword = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://cs462.judahparker.com/create', {
+      const response = await fetch('http://24.144.85.47:8080/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
