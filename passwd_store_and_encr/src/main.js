@@ -2,6 +2,7 @@ require('dotenv').config();
 require('./database/database');
 
 const express = require('express');
+const cors = require('cors'); 
 const rateLimiter = require('express-rate-limit');
 
 const { setupStartApiKey } = require('./apikey/apikey');
@@ -10,6 +11,10 @@ setupStartApiKey(process.env.START_API_KEY);
 const app = express();
 const port = 8080;
 
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST']
+}));
 app.use(express.json());
 
 const rateLimit = rateLimiter({
