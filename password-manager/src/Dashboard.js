@@ -28,7 +28,7 @@ const Dashboard = () => {
 
     const fetchData = async () => {
       try {
-        const response = await fetch('https://cs462.judahparker.com/read', {
+        const response = await fetch('http://24.144.85.47:8080/read', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -91,7 +91,7 @@ const AccessPassword = () => {
     };
 
     try {
-      const response = await fetch('https://cs462.judahparker.com/update', {
+      const response = await fetch('http://24.144.85.47:8080/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ const AccessPassword = () => {
 
   const handleDeletePassword = async () => {
     try {
-      const response = await fetch('https://cs462.judahparker.com/delete', {
+      const response = await fetch('http://24.144.85.47:8080/delete', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
