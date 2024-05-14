@@ -93,7 +93,7 @@ const NewPassword = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://cs462.judahparker.com/create', {
+      const response = await fetch('https://cs463.dimedash.xyz/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -209,6 +209,7 @@ const NewPassword = () => {
           <button type="submit" onClick={handleSubmit} className="button3">
               Save
           </button>
+          <br />
           <span className={`error-message ${errorMessage ? 'visible' : ''}`}>
               {errorMessage}
           </span>

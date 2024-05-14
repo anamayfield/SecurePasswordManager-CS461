@@ -6,9 +6,34 @@ import './Dashboard.css';
 
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
+
+function findDuplicatePasswords(accounts) {
+  const passwordMap = new Map();
+  const duplicates = new Set();
+
+  accounts.forEach(account => {
+      if (passwordMap.has(account.password)) {
+          passwordMap.get(account.password).push(account.id);
+          duplicates.add(account.password);
+      } else {
+          passwordMap.set(account.password, [account.id]);
+      }
+  });
+
+  const duplicateAccounts = [];
+  duplicates.forEach(password => {
+      const ids = passwordMap.get(password);
+      if (ids.length > 1) {
+          duplicateAccounts.push({password, ids});
+      }
+  });
+
+  return duplicateAccounts;
+}
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,6 +42,7 @@ const Dashboard = () => {
   const [filteredPasswords, setFilteredPasswords] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
+  const [duplicatePasswords, setDuplicatePasswords] = useState([]);
 
   const parentId = cookies.get('parentId');
 
@@ -28,7 +54,7 @@ const Dashboard = () => {
 
     const fetchData = async () => {
       try {
-        const response = await fetch('https://cs462.judahparker.com/read', {
+        const response = await fetch('https://cs463.dimedash.xyz/read', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -45,6 +71,7 @@ const Dashboard = () => {
     
         if (Array.isArray(responseData.accounts)) {
           setPasswords(responseData.accounts);
+          setDuplicatePasswords(findDuplicatePasswords(responseData.accounts));
           setLoading(false);
         } else {
           console.error('Invalid data format. Expected "accounts" array.');
@@ -75,7 +102,8 @@ const Dashboard = () => {
   }, [searchQuery, passwords]);
 
   const handleRowClick = (password) => {
-    navigate(`/access-password/${password.id}`, { state: { password } });
+    const isDuplicate = duplicatePasswords.some(d => d.ids.includes(password.id));
+    navigate(`/access-password/${password.id}`, { state: { password: password, isDuplicate: isDuplicate } });
   };
 
   const signOut = async () => {
@@ -118,12 +146,13 @@ const Dashboard = () => {
               <th>Website URL</th>
               <th>Username or Email</th>
               <th>Notes</th>
+              <th>Warnings</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="3">Loading...</td>
+                <td colSpan="4">Loading...</td>
               </tr>
             ) : (
               filteredPasswords.map((password) => (
@@ -131,6 +160,11 @@ const Dashboard = () => {
                   <td>{password.websiteUrl}</td>
                   <td>{password.emailOrUsername}</td>
                   <td>{password.notes}</td>
+                  {duplicatePasswords.some(d => d.ids.includes(password.id)) ? (
+                    <td><WarningRoundedIcon style={{ color: 'var(--errorRed)' }} /></td>
+                  ) : (
+                    <td></td>  // Empty cell if no warning
+                  )}
                 </tr>
               ))
             )}
