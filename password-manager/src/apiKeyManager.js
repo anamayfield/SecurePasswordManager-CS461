@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-let currentApiKey = process.env.START_API_KEY;
+let currentApiKey = 'f9e75c23b47f385a89eafdb420c87fe0';
 
 const getApiKey = () => currentApiKey;
 
