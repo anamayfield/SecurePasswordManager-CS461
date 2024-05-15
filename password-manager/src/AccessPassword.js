@@ -10,6 +10,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import WarningRoundedIcon from '@mui/icons-material/WarningRounded'; 
 
 const cookies = new Cookies();
 
@@ -18,11 +19,13 @@ const AccessPassword = () => {
   const location = useLocation();
   const parentId = cookies.get('parentId');
   const [password, setPassword] = useState();
+  const [isDuplicate, setIsDuplicate] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
 
   useEffect(() => {
     if (location.state && location.state.password) {
       setPassword(location.state.password);
+      setIsDuplicate(location.state.isDuplicate || false);
     }
   }, [location.state]);
 
@@ -91,7 +94,7 @@ const AccessPassword = () => {
     };
 
     try {
-      const response = await fetch('http://24.144.85.47:8080/update', {
+      const response = await fetch('https://cs463.dimedash.xyz/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +114,7 @@ const AccessPassword = () => {
 
   const handleDeletePassword = async () => {
     try {
-      const response = await fetch('http://24.144.85.47:8080/delete', {
+      const response = await fetch('https://cs463.dimedash.xyz/delete', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,6 +154,12 @@ const AccessPassword = () => {
 
   return (
     <div className="AccessPassword">
+      {isDuplicate && (
+        <div className="warning-banner" style={{ backgroundColor: '#FFF3CD', color: '#856404', padding: '10px 20px', borderRadius: '8px', margin: '10px 0', display: 'flex', alignItems: 'center' }}>
+           <WarningRoundedIcon style={{ color: 'var(--errorRed)', marginRight: '10px' }} />
+            <span>This password is being reused, which increases its risk of being compromised.</span>
+        </div>
+      )}
       <div className="sidebar">
         <h2>Secure Password Manager</h2>
         <ul>
