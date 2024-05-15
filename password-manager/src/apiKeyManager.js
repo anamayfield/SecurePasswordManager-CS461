@@ -19,6 +19,7 @@ const refreshApiKey = async () => {
       throw new Error('Failed to fetch API key expiration data');
     }
     const data = await response.json();
+    console.log(data);
 
     if (data.timeLeftMs <= 21600000) {
       const newKeyResponse = await fetch('/getlatestapikey', {
@@ -50,6 +51,7 @@ const useApiKey = () => {
     return () => clearInterval(interval);
   }, []);
 
+  console.log(apiKey)
   return apiKey;
 };
 

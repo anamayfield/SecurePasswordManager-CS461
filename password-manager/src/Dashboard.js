@@ -39,6 +39,7 @@ function findDuplicatePasswords(accounts) {
 const Dashboard = () => {
   const navigate = useNavigate();
   const apiKey = useApiKey();
+  console.log(apiKey);
   const [passwords, setPasswords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredPasswords, setFilteredPasswords] = useState([]);
