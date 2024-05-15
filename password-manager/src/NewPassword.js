@@ -167,7 +167,7 @@ const NewPassword = () => {
         <div className="title">
           <h2>New Password</h2>
         </div>
-        <div className="form">
+        <div className="form2">
           <div className="form-container">
           <form onSubmit={handleSubmit}>
             <input 

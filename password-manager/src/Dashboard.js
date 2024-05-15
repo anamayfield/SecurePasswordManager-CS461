@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { handleSignOut } from './HandleSignOut';
+import { useApiKey } from './apiKeyManager';
 import './global-styles.css';
 import './Dashboard.css';
 
@@ -37,6 +38,7 @@ function findDuplicatePasswords(accounts) {
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const apiKey = useApiKey();
   const [passwords, setPasswords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredPasswords, setFilteredPasswords] = useState([]);
@@ -60,7 +62,7 @@ const Dashboard = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            apiKey: 'x7hLkybNxzshSUKG',
+            apiKey,
             parentAccountId: parentId,
           }),
         });
@@ -90,7 +92,7 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [navigate, parentId]);
+  }, [navigate, parentId, apiKey]);
 
   useEffect(() => {
     const filtered = passwords.filter((password) =>
