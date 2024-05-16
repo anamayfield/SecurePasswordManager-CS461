@@ -86,13 +86,13 @@ const AccessPassword = () => {
 
   const updatePasswordInfo = async () => {
     const newData = {
-      "apiKey": "f9e75c23b47f385a89eafdb420c87fe0",
-      "idToUpdate": password.id,
-      "parentAccountId": parentId,
-      "websiteUrl": {formData.website},
-      "emailOrUsername": {formData.username},
-      "password": {formData.password},
-      "notes": {formData.notes},
+      apiKey: 'x7hLkybNxzshSUKG',
+      idToUpdate: password.id,
+      parentAccountId: parentId,
+      websiteUrl: formData.website,
+      emailOrUsername: formData.username,
+      password: formData.password,
+      notes: formData.notes,
     };
 
     try {
@@ -122,8 +122,8 @@ const AccessPassword = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "apiKey": {apiKey},
-          "idToDelete": {password.id},
+          apiKey: "{apiKey}",
+          idToDelete: password.id,
         }),
       });
 
