@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { handleSignOut } from './HandleSignOut';
+import { useApiKey } from './apiKeyManager';
 import './global-styles.css';
 import './NewPassword.css';
+
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
 import Cookies from 'universal-cookie';
@@ -12,6 +14,7 @@ const NewPassword = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(''); 
   const parentId = cookies.get('parentId');
+  const apiKey = useApiKey();
   const [formData, setFormData] = useState({
     websiteUrl: '',
     emailOrUsername: '',
@@ -99,7 +102,7 @@ const NewPassword = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "apiKey": "f9e75c23b47f385a89eafdb420c87fe0",
+          "apiKey": "{apiKey}",
           "parentAccountId": parentId,
           ...formData,
         }),
