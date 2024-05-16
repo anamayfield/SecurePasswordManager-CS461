@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createSupaClient, signIn, getUserID, getUserParentID } from './Authentication/Authenticate';
+import { createSupaClient, signIn, getUserString, getUserParentID } from './Authentication/Authenticate';
 import Cookies from 'universal-cookie';
 import './global-styles.css';
 import './LoginRegister.css';
@@ -26,11 +26,11 @@ const Login = ({ supabase }) => {
     } else if (response.data) {
       console.log('Sign in successful. User data:', response.data);
       const userParentId = await getUserParentID(supabaseClient); // Parent ID set for use with password DB
-      const userIdResponse = await getUserID(supabaseClient);
+      const userStringResponse = await getUserString(supabaseClient);
 
-      if (userIdResponse.error) {
-        console.error('Error getting user ID:', userIdResponse.error.message);
-        setErrorMessage('Error getting user ID. Please try again.');
+      if (userStringResponse.error) {
+        console.error('Error getting user String:', userStringResponse.error.message);
+        setErrorMessage('Error getting user String. Please try again.');
         return;
       }
 
@@ -50,7 +50,7 @@ const Login = ({ supabase }) => {
         console.log('Email sent successfully', totpData);
 
         // Assuming response.data contains the user object with a UUID `id`
-        cookies.set('userId', response.data.user.id, { path: '/' });
+        cookies.set('userString', userStringResponse, { path: '/' });
         //console.log('User ID set in cookies:', response.data.user.id);
 
         cookies.set('parentId', userParentId, { path: '/' });

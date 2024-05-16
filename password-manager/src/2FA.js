@@ -68,8 +68,8 @@ const TwoFactorAuthentication = () => {
   };
 
   const handleVerificationSubmit = async () => {
-    const userId = cookies.get('userId'); // Replaced localStorage retrieval cookies
-    if (!userId) {
+    const userString = cookies.get('userString'); // Replaced localStorage retrieval cookies
+    if (!userString) {
         console.error('User ID is undefined or not found.');
         return;
     }
@@ -81,7 +81,7 @@ const TwoFactorAuthentication = () => {
       const response = await fetch('https://obscure-lake-93009-52cae5311953.herokuapp.com/api/verify-totp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ totpCode: fullCode, userId: userId }),
+        body: JSON.stringify({ totpCode: fullCode, userString: userString }),
       });   
       const data = await response.json();   
       if (response.status === 401) {
