@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { handleSignOut } from './HandleSignOut';
+import { useApiKey } from './apiKeyManager';
 import { Link } from 'react-router-dom';
 import './global-styles.css';
 import './AccessPassword.css';
@@ -16,6 +17,7 @@ const cookies = new Cookies();
 
 const AccessPassword = () => {
   const navigate = useNavigate();
+  const apiKey = useApiKey();
   const location = useLocation();
   const parentId = cookies.get('parentId');
   const [password, setPassword] = useState();
@@ -120,7 +122,7 @@ const AccessPassword = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          apiKey: 'x7hLkybNxzshSUKG',
+          apiKey: "{apiKey}",
           idToDelete: password.id,
         }),
       });
@@ -154,12 +156,6 @@ const AccessPassword = () => {
 
   return (
     <div className="AccessPassword">
-      {isDuplicate && (
-        <div className="warning-banner" style={{ backgroundColor: '#FFF3CD', color: '#856404', padding: '10px 20px', borderRadius: '8px', margin: '10px 0', display: 'flex', alignItems: 'center' }}>
-           <WarningRoundedIcon style={{ color: 'var(--errorRed)', marginRight: '10px' }} />
-            <span>This password is being reused, which increases its risk of being compromised.</span>
-        </div>
-      )}
       <div className="sidebar">
         <h2>Secure Password Manager</h2>
         <ul>
@@ -178,6 +174,12 @@ const AccessPassword = () => {
             <Link to="/dashboard" className="button">All Passwords</Link>
           </div>
         </div>
+        {isDuplicate && (
+        <div className="warning-banner" style={{ backgroundColor: '#FFF3CD', color: '#856404', padding: '10px 20px', borderRadius: '8px', margin: '10px 0', display: 'flex', alignItems: 'center' }}>
+           <WarningRoundedIcon style={{ color: 'var(--errorRed)', marginRight: '10px' }} />
+            <span>This password is being reused, which increases its risk of being compromised.</span>
+        </div>
+        )}
         <div className="password-details">
         <p className="warning-message"></p>
         <div className="divider"></div>
