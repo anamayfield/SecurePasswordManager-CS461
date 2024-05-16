@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { handleSignOut } from './HandleSignOut';
+import { useApiKey } from './apiKeyManager';
 import './global-styles.css';
 import './Dashboard.css';
 
@@ -37,6 +38,8 @@ function findDuplicatePasswords(accounts) {
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const apiKey = useApiKey();
+  console.log(apiKey);
   const [passwords, setPasswords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredPasswords, setFilteredPasswords] = useState([]);
@@ -45,6 +48,7 @@ const Dashboard = () => {
   const [duplicatePasswords, setDuplicatePasswords] = useState([]);
 
   const parentId = cookies.get('parentId');
+  console.log(parentId)
 
   useEffect(() => {
     if (!parentId) {
@@ -60,8 +64,8 @@ const Dashboard = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            apiKey: 'x7hLkybNxzshSUKG',
-            parentAccountId: parentId,
+            "apiKey": "f9e75c23b47f385a89eafdb420c87fe0",
+            "parentAccountId": parentId,
           }),
         });
         if (!response.ok) {
@@ -90,7 +94,7 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [navigate, parentId]);
+  }, [navigate, parentId, apiKey]);
 
   useEffect(() => {
     const filtered = passwords.filter((password) =>

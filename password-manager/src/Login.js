@@ -77,7 +77,7 @@ const Login = ({ supabase }) => {
         </div>
       </div>
       <div className="split-right">
-        <div className="form">
+        <div className="form1">
           <h2 className="login-register-form-title">Welcome back</h2>
           <form>
             <div className="input-container">

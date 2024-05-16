@@ -6,10 +6,13 @@
   }
   
   .login-register-content {
-    max-width: 350px; 
+    max-width: 400px; 
+    text-align: left;
+    padding: 20px;
   }
 
   .login-register-title {
+    text-align: left;
     font-size: 50px;
     font-weight: 800;
     color: var(--cream);

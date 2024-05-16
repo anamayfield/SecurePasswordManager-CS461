@@ -72,7 +72,7 @@ const Register = () => {
         </div>
       </div>
       <div className="split-right">
-        <div className="form">
+        <div className="form1">
           <h2 className="login-register-form-title">Sign up to get started</h2>
           <form onSubmit={handleRegister}>
             <div className="input-container">

@@ -99,8 +99,8 @@ const NewPassword = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          apiKey: 'x7hLkybNxzshSUKG',
-          parentAccountId: parentId,
+          "apiKey": "f9e75c23b47f385a89eafdb420c87fe0",
+          "parentAccountId": parentId,
           ...formData,
         }),
       });
@@ -167,7 +167,7 @@ const NewPassword = () => {
         <div className="title">
           <h2>New Password</h2>
         </div>
-        <div className="form">
+        <div className="form2">
           <div className="form-container">
           <form onSubmit={handleSubmit}>
             <input 
