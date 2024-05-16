@@ -26,14 +26,14 @@ const Register = () => {
         console.error('Error signing up:', response.error.message);
         setErrorMessage(response.error.message + ' Please try again.');
     } else if (response.data) {
-      const userId = response.data.user.id; // Assuming this is how you get the userId from the response
+      const userString = response.data.user.id; // Assuming this is how you get the userId from the response
 
       try {
         // Trigger TOTP Email sending after successful registration
         const totpResponse = await fetch('https://obscure-lake-93009-52cae5311953.herokuapp.com/api/totp/send-totp', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, userId: userId }) // Include userId in the request body
+          body: JSON.stringify({ email: email, userString: userString }) // Include userId in the request body
         });
 
         if (!totpResponse.ok) {
@@ -45,11 +45,11 @@ const Register = () => {
 
         // Assuming storeTOTPAndUser is modified to accept totpCode as an argument
         if (totpData.success && totpData.totpCode) {
-          await storeTOTPAndUser(supabase, totpData.totpCode, userId);
+          await storeTOTPAndUser(supabase, totpData.totpCode, userString);
         }
 
-        cookies.set('userId', userId, { path: '/' });
-        console.log('User ID set in cookies:', userId);
+        cookies.set('userString', userString, { path: '/' });
+        console.log('User ID set in cookies:', userString);
         
         navigate('/verify');
 

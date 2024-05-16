@@ -1,10 +1,4 @@
 const { createClient } = require('@supabase/supabase-js');
-// const { testFunctionTOTP } = require('../totp/TOTPGenerator.js');
-
-// const supabase_url = 'https://dtwmtlfnskzbtsgndetr.supabase.co';
-// const anon_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0d210bGZuc2t6YnRzZ25kZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE4ODQxMTMsImV4cCI6MjAxNzQ2MDExM30.qoYr-kxeXb4I3rRe-dzqaC__SWiAUt4g1YSsES01mxk';
-
-// const supabase = createClient(supabase_url, anon_key);
 
 const readline = require('readline');
 
