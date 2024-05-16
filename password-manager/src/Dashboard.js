@@ -48,6 +48,7 @@ const Dashboard = () => {
   const [duplicatePasswords, setDuplicatePasswords] = useState([]);
 
   const parentId = cookies.get('parentId');
+  console.log(parentId)
 
   useEffect(() => {
     if (!parentId) {
@@ -63,7 +64,7 @@ const Dashboard = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            apiKey,
+            apiKey: apiKey,
             parentAccountId: parentId,
           }),
         });
