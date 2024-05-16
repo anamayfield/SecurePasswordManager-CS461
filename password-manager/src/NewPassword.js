@@ -102,7 +102,7 @@ const NewPassword = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "apiKey": "{apiKey}",
+          "apiKey": {apiKey},
           "parentAccountId": parentId,
           ...formData,
         }),
