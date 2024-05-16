@@ -122,7 +122,7 @@ const AccessPassword = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          apiKey: "{apiKey}",
+          apiKey: 'x7hLkybNxzshSUKG',
           idToDelete: password.id,
         }),
       });
