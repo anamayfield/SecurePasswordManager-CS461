@@ -18,6 +18,7 @@ const cookies = new Cookies();
 const AccessPassword = () => {
   const navigate = useNavigate();
   const apiKey = useApiKey();
+  console.log(apiKey);
   const location = useLocation();
   const parentId = cookies.get('parentId');
   const [password, setPassword] = useState();
@@ -115,6 +116,7 @@ const AccessPassword = () => {
   };
 
   const handleDeletePassword = async () => {
+    console.log("Trying to delete password with ID value:", password.id);
     try {
       const response = await fetch('https://cs463.dimedash.xyz/delete', {
         method: 'POST',
