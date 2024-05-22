@@ -64,7 +64,7 @@ const Dashboard = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            "apiKey": "f9e75c23b47f385a89eafdb420c87fe0",
+            "apiKey": apiKey,
             "parentAccountId": parentId,
           }),
         });
