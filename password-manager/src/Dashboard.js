@@ -39,6 +39,7 @@ function findDuplicatePasswords(accounts) {
 const Dashboard = () => {
   const navigate = useNavigate();
   const apiKey = useApiKey();
+  console.log(apiKey);
   const [passwords, setPasswords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredPasswords, setFilteredPasswords] = useState([]);
@@ -47,6 +48,7 @@ const Dashboard = () => {
   const [duplicatePasswords, setDuplicatePasswords] = useState([]);
 
   const parentId = cookies.get('parentId');
+  console.log(parentId)
 
   useEffect(() => {
     if (!parentId) {
@@ -62,7 +64,7 @@ const Dashboard = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            "apiKey": "{apiKey}",
+            "apiKey": apiKey,
             "parentAccountId": parentId,
           }),
         });
@@ -148,7 +150,7 @@ const Dashboard = () => {
               <th>Website URL</th>
               <th>Username or Email</th>
               <th>Notes</th>
-              <th></th>
+              <th>Warnings</th>
             </tr>
           </thead>
           <tbody>
