@@ -18,7 +18,6 @@ const cookies = new Cookies();
 const AccessPassword = () => {
   const navigate = useNavigate();
   const apiKey = useApiKey();
-  console.log(apiKey);
   const location = useLocation();
   const parentId = cookies.get('parentId');
   const [password, setPassword] = useState();
@@ -116,7 +115,6 @@ const AccessPassword = () => {
   };
 
   const handleDeletePassword = async () => {
-    console.log("Trying to delete password with ID value:", password.id);
     try {
       const response = await fetch('https://cs463.dimedash.xyz/delete', {
         method: 'POST',
@@ -195,12 +193,12 @@ const AccessPassword = () => {
                 onChange={handleInputChange}
                 className="input"
               />
-              <button onClick={handleSubmitWebsiteEdit} className="edit-save-button">Save</button>
+              <button onClick={handleSubmitWebsiteEdit} className="save-button">Save</button>
             </>
           ) : (
             <div className="info-data">
               {formData.website}
-              <button onClick={() => handleEditClick('website')} className="edit-save-button">Edit</button>
+              <button onClick={() => handleEditClick('website')} className="edit-button"><EditRoundedIcon /></button>
             </div>
           )}
         </div>
@@ -215,12 +213,12 @@ const AccessPassword = () => {
                 value={formData.username}
                 onChange={handleInputChange}
               />
-              <button onClick={handleSubmitUsernameEdit} className="edit-save-button">Save</button>
+              <button onClick={handleSubmitUsernameEdit} className="save-button">Save</button>
             </>
           ) : (
             <div className="info-data">
               {formData.username}
-              <button onClick={() => handleEditClick('username')} className="edit-save-button">Edit</button>
+              <button onClick={() => handleEditClick('username')} className="edit-button"><EditRoundedIcon /></button>
             </div>
           )}
         </div>
@@ -239,12 +237,12 @@ const AccessPassword = () => {
                 value={formData.notes}
                 onChange={handleInputChange}
               />
-              <button onClick={handleSubmitNotesEdit} className="edit-save-button">Save</button>
+              <button onClick={handleSubmitNotesEdit} className="save-button">Save</button>
             </>
           ) : (
             <div className="info-data">
               {formData.notes}
-              <button onClick={() => handleEditClick('notes')} className="edit-save-button">Edit</button>
+              <button onClick={() => handleEditClick('notes')} className="edit-button"><EditRoundedIcon /></button>
             </div>
           )}
         </div>
