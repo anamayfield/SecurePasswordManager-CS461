@@ -5,7 +5,7 @@ import { verifyTOTP, decryptSecret } from '../TOTPGenerator.js';
 // Initialize router
 const router = express.Router();
 
-// Initialize supabase client
+// Initialize Supabase client
 const supabaseUrl = 'https://dtwmtlfnskzbtsgndetr.supabase.co';
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0d210bGZuc2t6YnRzZ25kZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDE4ODQxMTMsImV4cCI6MjAxNzQ2MDExM30.qoYr-kxeXb4I3rRe-dzqaC__SWiAUt4g1YSsES01mxk';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -14,15 +14,29 @@ router.post('/', async (req, res) => {
     const { totpCode, userId } = req.body;
     console.log("Received userId for verification:", userId); 
 
+    // Fetch user details to show interaction with the database
+    const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('email, name')
+        .eq('id', userId)
+        .single();
+
+    if (userError) {
+        console.error('Error fetching user details:', userError);
+        return res.status(500).json({ message: 'Failed to fetch user details.', details: userError.message });
+    }
+
+    console.log("User details retrieved for verification:", userData);
+
     try {
         // 'created_at' in totp table (double check this)
         const { data, error } = await supabase
             .from('totp')
             .select('totp_code')
             .eq('user_id_string', userId)
-            .order('created_at', { ascending: false })  // ,must have an index on 'created_at'
-            .limit(1)  // Ensures only the most recent entry is fetched
-            .single(); // Attempts to retrieve a single row
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single();
 
         if (error) {
             throw error;
