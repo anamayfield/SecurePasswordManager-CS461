@@ -198,7 +198,7 @@ const AccessPassword = () => {
           ) : (
             <div className="info-data">
               {formData.website}
-              <button onClick={() => handleEditClick('website')}><EditRoundedIcon /></button>
+              <button onClick={() => handleEditClick('website')} className="edit-button"><EditRoundedIcon /></button>
             </div>
           )}
         </div>
@@ -218,7 +218,7 @@ const AccessPassword = () => {
           ) : (
             <div className="info-data">
               {formData.username}
-              <button onClick={() => handleEditClick('username')}><EditRoundedIcon /></button>
+              <button onClick={() => handleEditClick('username')} className="edit-button"><EditRoundedIcon /></button>
             </div>
           )}
         </div>
@@ -242,7 +242,7 @@ const AccessPassword = () => {
           ) : (
             <div className="info-data">
               {formData.notes}
-              <button onClick={() => handleEditClick('notes')}><EditRoundedIcon /></button>
+              <button onClick={() => handleEditClick('notes')} className="edit-button"><EditRoundedIcon /></button>
             </div>
           )}
         </div>
