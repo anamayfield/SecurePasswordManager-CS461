@@ -5,7 +5,6 @@ import Homepage from './HomePage';
 import Register from './Register';
 import Login from './Login';
 import Dashboard from './Dashboard';
-import Settings from './Settings';
 import NewPassword from './NewPassword';
 import TwoFactorAuthentication from './2FA';
 import AccessPassword from './AccessPassword';
@@ -20,7 +19,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/verify" element={<TwoFactorAuthentication/>} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/settings" element={<Settings />} />
           <Route path="/new-password" element={<NewPassword />} />
           <Route path="/access-password/:id" element={<AccessPassword />} />
         </Routes>

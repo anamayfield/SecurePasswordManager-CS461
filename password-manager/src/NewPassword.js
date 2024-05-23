@@ -153,7 +153,6 @@ const NewPassword = () => {
         <h2>Secure Password Manager</h2>
         <ul>
           <li><Link to="/dashboard">All Passwords</Link></li>
-          <li><Link to="/settings">Settings</Link></li>
         </ul>
         <button onClick={signOut} className="button">
           <LogoutRoundedIcon style={{ verticalAlign: 'middle' }} /> 
