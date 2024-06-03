@@ -42,6 +42,7 @@ const refreshApiKey = async () => {
     return currentApiKey;
   } catch (error) {
     console.error('Error refreshing API key: ', error);
+    console.log(currentApiKey);
     return currentApiKey;
   }
 };
@@ -52,7 +53,9 @@ const useApiKey = () => {
   useEffect(() => {
     const fetchAndSetApiKey = async () => {
       const newKey = await refreshApiKey();
-      setApiKeyState(newKey);
+      if (newKey !== currentApiKey) {
+        setApiKeyState(newKey);
+      }
     };
 
     fetchAndSetApiKey();
@@ -62,6 +65,7 @@ const useApiKey = () => {
     return () => clearInterval(interval);
   }, []);
 
+  console.log(apiKey);
   return apiKey;
 };
 
