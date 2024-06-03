@@ -10,22 +10,31 @@ const setApiKey = (newKey) => {
 
 const refreshApiKey = async () => {
   try {
-    const newKeyResponse = await fetch('https://cs463.dimedash.xyz/getlatestapikey', {
+    const response = await fetch('https://cs463.dimedash.xyz/getapikeyexp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ apiKey: currentApiKey }),
+      body: JSON.stringify({ apiKey: currentApiKey })
     });
-
-    if (!newKeyResponse.ok) {
-      throw new Error('Failed to fetch latest API key');
+    if (!response.ok) {
+      throw new Error('Failed to fetch API key expiration data');
     }
+    const data = await response.json();
+    console.log(data);
 
-    const newKeyData = await newKeyResponse.json();
-    setApiKey(newKeyData.latestApiKey);
-    return newKeyData.latestApiKey;
+    if (data.timeLeftMs <= 21600000) {
+      const newKeyResponse = await fetch('https://cs463.dimedash.xyz/getlatestapikey', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ apiKey: currentApiKey })
+      });
+      if (!newKeyResponse.ok) {
+        throw new Error('Failed to fetch latest API key');
+      }
+      const newKeyData = await newKeyResponse.json();
+      setApiKey(newKeyData.latestApiKey);
+    }
   } catch (error) {
-    console.error('Error refreshing API key: ', error);
-    return currentApiKey;
+    console.error("Error refreshing API key: ", error);
   }
 };
 
@@ -33,18 +42,16 @@ const useApiKey = () => {
   const [apiKey, setApiKeyState] = useState(currentApiKey);
 
   useEffect(() => {
-    const fetchAndSetApiKey = async () => {
-      const newKey = await refreshApiKey();
-      setApiKeyState(newKey);
-    };
-
-    fetchAndSetApiKey();
-    
-    const interval = setInterval(fetchAndSetApiKey, 3600000);
+    const interval = setInterval(() => {
+      refreshApiKey().then(() => {
+        setApiKeyState(currentApiKey);
+      });
+    }, 3600000);
 
     return () => clearInterval(interval);
   }, []);
 
+  console.log(apiKey)
   return apiKey;
 };
 
