@@ -10,39 +10,21 @@ const setApiKey = (newKey) => {
 
 const refreshApiKey = async () => {
   try {
-    const response = await fetch('/getapikeyexp', {
+    const newKeyResponse = await fetch('/getlatestapikey', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ apiKey: currentApiKey }),
     });
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch API key expiration data');
+    if (!newKeyResponse.ok) {
+      throw new Error('Failed to fetch latest API key');
     }
 
-    const data = await response.json();
-    console.log(data);
-
-    if (data.timeLeftMs <= 21600000) {
-      const newKeyResponse = await fetch('/getlatestapikey', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ apiKey: currentApiKey }),
-      });
-
-      if (!newKeyResponse.ok) {
-        throw new Error('Failed to fetch latest API key');
-      }
-
-      const newKeyData = await newKeyResponse.json();
-      setApiKey(newKeyData.latestApiKey);
-      return newKeyData.latestApiKey;
-    }
-
-    return currentApiKey;
+    const newKeyData = await newKeyResponse.json();
+    setApiKey(newKeyData.latestApiKey);
+    return newKeyData.latestApiKey;
   } catch (error) {
     console.error('Error refreshing API key: ', error);
-    console.log(currentApiKey);
     return currentApiKey;
   }
 };
@@ -53,9 +35,7 @@ const useApiKey = () => {
   useEffect(() => {
     const fetchAndSetApiKey = async () => {
       const newKey = await refreshApiKey();
-      if (newKey !== currentApiKey) {
-        setApiKeyState(newKey);
-      }
+      setApiKeyState(newKey);
     };
 
     fetchAndSetApiKey();
@@ -65,7 +45,6 @@ const useApiKey = () => {
     return () => clearInterval(interval);
   }, []);
 
-  console.log(apiKey);
   return apiKey;
 };
 
